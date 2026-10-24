@@ -18,7 +18,7 @@
                     <HBox width="100%" wrap="Wrap" alignItems="Center" class="heroLayout">
                         <VBox class="heroCopy">
                             <ObjectStatus text="ADOPT • LOVE • REPEAT" icon="sap-icon://heart-2" state="Success" class="heroEyebrow"/>
-                            <Title id="heroTitle" text="Find your new\nbest friend." level="H1" class="heroTitle"/>
+                            <Title id="heroTitle" text="Find your new best friend." level="H1" class="heroTitle"/>
                             <Text id="heroDescription" text="Every animal deserves a loving home. Meet your next family member and help a rescue story end with a happy beginning." wrapping="true" class="heroDescription"/>
                             <HBox wrap="Wrap" alignItems="Center" class="heroFacts">
                                 <ObjectStatus text="Kind homes, happier lives" icon="sap-icon://home" state="None"/>
