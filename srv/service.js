@@ -426,7 +426,7 @@ this.on(
     "MyPendingApplications",
     async (req) => {
         const user =
-            await getSignedInUser(req);
+            await getSignedInUser(req, "User");
 
         const applications =
             await SELECT
@@ -447,7 +447,7 @@ this.on(
     "MyTotalAdoptions",
     async (req) => {
         const user =
-            await getSignedInUser(req);
+            await getSignedInUser(req, "User");
 
         const applications =
             await SELECT
@@ -493,7 +493,7 @@ this.on(
         } = req.data;
 
         const applicant =
-            await getSignedInUser(req);
+            await getSignedInUser(req, "User");
 
         if (applicant.role !== "User") {
             return req.reject(
