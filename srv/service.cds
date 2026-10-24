@@ -397,7 +397,7 @@ service UserService {
 // INSPECTOR SERVICE
 // ====================================================================
 
-@restrict : [{ to: ['Inspector', 'Admin'] }]
+@requires : ['Inspector', 'Admin']
 service InspectorService {
 
     // =====================================================
