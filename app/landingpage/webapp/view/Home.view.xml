@@ -61,7 +61,7 @@
                                     <ObjectStatus id="adminFeatureWorkflow" text="Application review and approval" icon="sap-icon://workflow-tasks"/>
                                     <ObjectStatus id="adminFeatureHealth" text="Animal health management" icon="sap-icon://clinical-order"/>
                                 </VBox>
-                                <Button id="btnAdminSignIn" text="Enter admin portal" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Emphasized" class="portalButton" press=".onAdminSignIn"/>
+                                <Button id="btnAdminSignIn" text="Open Admin Dashboard" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Emphasized" class="portalButton" press=".onAdminSignIn"/>
                             </VBox>
                         </Panel>
 
@@ -78,7 +78,7 @@
                                     <ObjectStatus id="userFeatureApplications" text="Submit and track applications" icon="sap-icon://document-text"/>
                                     <ObjectStatus id="userFeatureAdoptions" text="View completed adoptions" icon="sap-icon://accept"/>
                                 </VBox>
-                                <Button id="btnUserSignIn" text="Find your companion" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Accept" class="portalButton userPortalButton" press=".onUserSignIn"/>
+                                <Button id="btnUserSignIn" text="Browse and Adopt Animals" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Accept" class="portalButton userPortalButton" press=".onUserSignIn"/>
                             </VBox>
                         </Panel>
 
@@ -95,7 +95,7 @@
                                     <ObjectStatus id="inspectorFeatureValidate" text="Validate inspection results" icon="sap-icon://inspection"/>
                                     <ObjectStatus id="inspectorFeatureRemarks" text="Record results and remarks" icon="sap-icon://notes"/>
                                 </VBox>
-                                <Button id="btnInspectorSignIn" text="Enter inspector portal" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Attention" class="portalButton inspectorPortalButton" press=".onInspectorSignIn"/>
+                                <Button id="btnInspectorSignIn" text="Open Inspection Dashboard" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Attention" class="portalButton inspectorPortalButton" press=".onInspectorSignIn"/>
                             </VBox>
                         </Panel>
                     </FlexBox>
