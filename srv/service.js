@@ -36,7 +36,7 @@ const isLocalDummyAuth = () => {
 const getSignedInUser = async (req, fallbackRole) => {
     const userID = req.user?.id?.trim();
 
-    if ((!userID || userID === "anonymous") && isLocalDummyAuth()) {
+    if (isLocalDummyAuth()) {
         if (fallbackRole) {
             const demoUser = await SELECT.one
                 .from(Users)
