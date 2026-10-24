@@ -1,0 +1,2 @@
+ID,application_ID,animal_ID,adoptionDate,status,completedBy,remarks
+ADP00001-1111-1111-1111-111111111111,APP00002-2222-2222-2222-222222222222,<existing_animal_id>,2026-10-15,Completed,Admin User,Successful Adoption

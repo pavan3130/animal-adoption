@@ -1,0 +1,102 @@
+POST http://localhost:4004/odata/v4/admin/CreateAnimal
+Content-Type: application/json
+
+{
+  "shelterID": "11111111-1111-1111-1111-111111111111",
+  "name": "Buddy",
+  "species": "Dog",
+  "breed": "Labrador Retriever",
+  "gender": "Male",
+  "age": 3,
+  "vaccinationStatus": "Fully Vaccinated",
+  "spayedOrNeutered": "Yes",
+  "description": "Friendly and energetic family dog"
+}
+###
+POST http://localhost:4004/odata/v4/admin/CreateAnimal
+Content-Type: application/json
+
+{
+  "shelterID": "11111111-1111-1111-1111-111111111111",
+  "name": "Milo",
+  "species": "Cat",
+  "breed": "Siamese",
+  "gender": "Male",
+  "age": 2,
+  "vaccinationStatus": "Vaccinated",
+  "spayedOrNeutered": "Yes",
+  "description": "Indoor cat with a calm temperament"
+}
+###
+POST http://localhost:4004/odata/v4/admin/CreateShelter
+Content-Type: application/json
+
+{
+  "shelterName": "Happy Paws Shelter",
+  "shelterCode": "HPS001",
+  "addressLine1": "MG Road",
+  "addressLine2": "Near Metro Station",
+  "city": "Bangalore",
+  "state": "Karnataka",
+  "postalCode": "560001",
+  "country": "India",
+  "contactNumber": "9876543210",
+  "email": "contact@happypaws.com",
+  "website": "www.happypaws.com",
+  "capacity": 100,
+  "shelterType": "Animal Rescue",
+  "licenseNumber": "LIC001"
+}
+###
+GET http://localhost:4004/odata/v4/admin/Shelters
+###
+POST http://localhost:4004/odata/v4/admin/DeleteAnimal
+Content-Type: application/json
+
+{
+  "animalID": "8a05a977-d9c9-4f9d-85ad-2feabd8edd0c"
+}
+###
+POST http://localhost:4004/odata/v4/admin/DeleteAnimal
+Content-Type: application/json
+
+{
+  "animalID":"fccf54ba-3f35-463b-96f9-7d95f57eb5db"
+}
+###
+POST http://localhost:4004/odata/v4/admin/DeleteShelter
+Content-Type: application/json
+
+{
+  "shelterID": "11111111-1111-1111-1111-111111111111"
+}
+###
+POST http://localhost:4004/odata/v4/admin/DeleteShelter
+Content-Type: application/json
+
+{
+  "shelterID": "11111111-1111-1111-1111-111111111111"
+}
+###
+POST http://localhost:4004/odata/v4/admin/DeleteShelter
+Content-Type: application/json
+
+{
+  "shelterID": "6f5a01bd-3497-4ddf-8828-4ab3d0f5c8dc"
+}
+###
+POST http://localhost:4004/odata/v4/admin/DeleteShelter
+Content-Type: application/json
+
+{
+  "shelterID": "6f5a01bd-3497-4ddf-8828-4ab3d0f5c8dc"
+}
+###
+http://localhost:4004/odata/v4/admin/TotalAnimals()
+###
+http://localhost:4004/odata/v4/admin/TotalHealthRecords()
+###
+http://localhost:4004/odata/v4/admin/TotalApplications()
+###
+http://localhost:4004/odata/v4/admin/PendingApplications()
+

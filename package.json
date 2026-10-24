@@ -1,0 +1,80 @@
+{
+  "name": "animal-adoption",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+  "node": "22.x"
+},
+  "dependencies": {
+    "@cap-js/hana": "^3.1.2",
+    "@sap/cds": "^10.1.1",
+    "@sap/xssec": "^4"
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "devDependencies": {
+    "@sap/cds-dk": "^10.2.0",
+    "cds-plugin-ui5": "^0.17.0"
+  },
+  "scripts": {
+    "watch-sprintproject": "cds watch --open animaladoption.admin.sprintproject/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-sprintproject1": "cds watch --open animaladoption.user.sprintproject1/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-admindashboard": "cds watch --open animaladoption.dashboard.admin.admindashboard/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-userdashboard": "cds watch --open animaladoption.dashboard.user.userdashboard/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-landingpage": "cds watch --open animaladoption.dashboard.home.landingpage/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-applicationworkflow": "cds watch --open animaladoption.workflow.admin.applicationworkflow/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-healthmanagement": "cds watch --open animaladoption.health.admin.healthmanagement/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-inspectionmanagement": "cds watch --open animaladoption.inspection.inspectionmanagement/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "build": "cds build --production",
+    "start": "cds-serve"
+  },
+  "sapux": [
+    "app/sprintproject",
+    "app/sprintproject1",
+    "app/admindashboard",
+    "app/userdashboard",
+    "app/landingpage",
+    "app/applicationworkflow",
+    "app/healthmanagement",
+    "app/inspectionmanagement"
+  ],
+  "cds": {
+    "requires": {
+      "auth": {
+        "[development]": {
+          "kind": "mocked",
+          "users": {
+            "pavan@example.com": {
+              "password": "pavan",
+              "roles": [
+                "User"
+              ]
+            },
+            "sneha@example.com": {
+              "password": "sneha",
+              "roles": [
+                "User"
+              ]
+            },
+            "rahul@example.com": {
+              "password": "rahul",
+              "roles": [
+                "Inspector"
+              ]
+            },
+            "admin@example.com": {
+              "password": "admin",
+              "roles": [
+                "Admin"
+              ]
+            }
+          }
+        },
+        "[production]": {
+          "kind": "xsuaa"
+        }
+      }
+    }
+  }
+}

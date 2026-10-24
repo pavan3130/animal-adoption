@@ -1,0 +1,4 @@
+ID,shelterName,shelterCode,addressLine1,addressLine2,city,state,postalCode,country,contactNumber,email,website,capacity,currentOccupancy,operatingTime,closingTime,shelterType,licenseNumber
+cccccccc-cccc-cccc-cccc-cccccccccccc,Happy Paws Shelter,HPS101,MG Road,Near Metro Station,Bangalore,Karnataka,560001,India,9876543210,happypaws@example.com,www.happypaws.com,100,20,09:00:00,18:00:00,Animal Rescue,LIC101
+dddddddd-dddd-dddd-dddd-dddddddddddd,Animal Care Center,ACC101,Whitefield Main Road,Phase 1,Bangalore,Karnataka,560066,India,9123456789,care@example.com,www.acc.com,150,35,08:00:00,19:00:00,Adoption Center,LIC102
+eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee,Pet Haven Shelter,PHS101,HSR Layout,Sector 2,Bangalore,Karnataka,560102,India,9988776655,pethaven@example.com,www.pethaven.com,120,40,09:00:00,18:00:00,Shelter Home,LIC103

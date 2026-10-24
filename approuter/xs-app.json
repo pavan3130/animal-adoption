@@ -1,0 +1,38 @@
+{
+  "welcomeFile": "/animaladoption.dashboard.home.landingpage/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout",
+    "logoutPage": "/animaladoption.dashboard.home.landingpage/index.html"
+  },
+  "routes": [
+    {
+      "source": "^/animaladoption\\.dashboard\\.home\\.landingpage/(.*)$",
+      "target": "/animaladoption.dashboard.home.landingpage/$1",
+      "destination": "srv-api",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/resources/(.*)$",
+      "target": "/resources/$1",
+      "destination": "srv-api",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/test-resources/(.*)$",
+      "target": "/test-resources/$1",
+      "destination": "srv-api",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/(.*)$",
+      "target": "/$1",
+      "destination": "srv-api",
+      "authenticationType": "xsuaa",
+      "csrfProtection": true
+    }
+  ]
+}

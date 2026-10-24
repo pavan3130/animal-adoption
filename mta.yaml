@@ -1,0 +1,141 @@
+_schema-version: "3.3.0"
+ID: animal-adoption
+version: 1.0.0
+description: "Animal Adoption Management System"
+
+parameters:
+  enable-parallel-deployments: true
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+        - rm -rf .deploy/app-router
+        - mkdir -p .deploy/app-router
+        - cp approuter/package.json .deploy/app-router/package.json
+        - cp approuter/xs-app.json .deploy/app-router/xs-app.json
+
+modules:
+  # ==================================================================
+  # CAP SERVICE
+  # ==================================================================
+
+  - name: animal-adoption-srv
+    type: nodejs
+    path: gen/srv
+
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+
+    build-parameters:
+      builder: npm-ci
+
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+
+    requires:
+      - name: animal-adoption-auth
+      - name: animal-adoption-db
+
+  # ==================================================================
+  # HANA DATABASE DEPLOYER
+  # ==================================================================
+
+  - name: animal-adoption-db-deployer
+    type: hdb
+    path: gen/db
+
+    parameters:
+      buildpack: nodejs_buildpack
+
+    requires:
+      - name: animal-adoption-db
+
+  # ==================================================================
+  # APPLICATION ROUTER
+  # ==================================================================
+
+  - name: animal-adoption
+    type: approuter.nodejs
+    path: .deploy/app-router
+
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
+
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api
+          url: ~{srv-url}
+          forwardAuthToken: true
+
+      - name: animal-adoption-auth
+
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
+
+resources:
+  # ==================================================================
+  # XSUAA AUTHENTICATION
+  # ==================================================================
+
+  - name: animal-adoption-auth
+    type: org.cloudfoundry.managed-service
+
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+
+      config:
+        xsappname: animal-adoption-${org}-${space}
+        tenant-mode: dedicated
+
+        oauth2-configuration:
+          credential-types:
+            - binding-secret
+            - x509
+
+          redirect-uris:
+            - "https://*~{app-api/app-uri}/**"
+
+        role-collections:
+          - name: "Animal Adoption Admin (${org}-${space})"
+            description: "Administrator access for Animal Adoption Management"
+            role-template-references:
+              - "$XSAPPNAME.Admin"
+
+          - name: "Animal Adoption User (${org}-${space})"
+            description: "Adoption user access for Animal Adoption Management"
+            role-template-references:
+              - "$XSAPPNAME.User"
+
+          - name: "Animal Adoption Inspector (${org}-${space})"
+            description: "Inspector access for Animal Adoption Management"
+            role-template-references:
+              - "$XSAPPNAME.Inspector"
+
+    requires:
+      - name: app-api
+
+  # ==================================================================
+  # HANA HDI CONTAINER
+  # ==================================================================
+
+  - name: animal-adoption-db
+    type: com.sap.xs.hdi-container
+
+    parameters:
+      service: hana
+      service-plan: hdi-shared

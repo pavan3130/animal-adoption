@@ -1,0 +1,562 @@
+<mvc:View
+    controllerName="animaladoption.dashboard.admin.admindashboard.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page
+        id="dashboardPage"
+        busyIndicatorDelay="0">
+
+        <!-- ===================================================== -->
+        <!-- ADMIN HEADER                                          -->
+        <!-- ===================================================== -->
+
+        <customHeader>
+
+            <OverflowToolbar id="adminDashboardHeader">
+
+                <Title
+                    id="adminDashboardTitle"
+                    text="Animal Adoption Admin Dashboard"
+                    level="H2" />
+
+                <ToolbarSpacer id="adminHeaderSpacer" />
+
+                <Button
+                    id="btnRefreshDashboard"
+                    text="Refresh"
+                    icon="sap-icon://refresh"
+                    type="Transparent"
+                    tooltip="Refresh dashboard"
+                    press=".onRefreshDashboard" />
+
+                <Button
+                    id="btnAdminProfile"
+                    text="{session>/displayName}"
+                    icon="sap-icon://person-placeholder"
+                    type="Transparent"
+                    tooltip="Administrator profile"
+                    press=".onProfilePress" />
+
+            </OverflowToolbar>
+
+        </customHeader>
+
+        <content>
+
+            <VBox
+                id="mainContainer"
+                width="100%"
+                class="sapUiMediumMargin">
+
+                <!-- ================================================= -->
+                <!-- DASHBOARD HEADER                                  -->
+                <!-- ================================================= -->
+
+                <ObjectHeader
+                    id="dashboardHeader"
+                    title="Animal Adoption Management Dashboard"
+                    intro="Admin Control Center">
+
+                    <statuses>
+
+                        <ObjectStatus
+                            id="dashboardStatus"
+                            text="System Overview"
+                            state="Information" />
+
+                        <ObjectStatus
+                            id="administratorStatus"
+                            title="Signed in as"
+                            text="{session>/email}"
+                            state="Success" />
+
+                    </statuses>
+
+                    <attributes>
+
+                        <ObjectAttribute
+                            id="administratorRole"
+                            title="Role"
+                            text="{session>/role}" />
+
+                    </attributes>
+
+                </ObjectHeader>
+
+                <!-- ================================================= -->
+                <!-- KPI ROW 1                                         -->
+                <!-- ================================================= -->
+
+                <FlexBox
+                    id="row1"
+                    width="100%"
+                    wrap="Wrap"
+                    justifyContent="Center"
+                    class="sapUiMediumMarginTop">
+
+                    <GenericTile
+                        id="tileTotalAnimals"
+                        header="Total Animals"
+                        class="sapUiSmallMargin"
+                        press=".onTotalAnimalsPress">
+
+                        <TileContent id="tcTotalAnimals">
+
+                            <NumericContent
+                                id="numTotalAnimals"
+                                value="{dashboard>/totalAnimals}"
+                                icon="sap-icon://activity-items" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="tileAvailableAnimals"
+                        header="Available Animals"
+                        class="sapUiSmallMargin"
+                        press=".onAvailableAnimalsPress">
+
+                        <TileContent id="tcAvailableAnimals">
+
+                            <NumericContent
+                                id="numAvailableAnimals"
+                                value="{dashboard>/availableAnimals}"
+                                valueColor="Good"
+                                icon="sap-icon://accept" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="tileAdoptedAnimals"
+                        header="Adopted Animals"
+                        class="sapUiSmallMargin"
+                        press=".onAdoptedAnimalsPress">
+
+                        <TileContent id="tcAdoptedAnimals">
+
+                            <NumericContent
+                                id="numAdoptedAnimals"
+                                value="{dashboard>/adoptedAnimals}"
+                                valueColor="Good"
+                                icon="sap-icon://home" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                </FlexBox>
+
+                <!-- ================================================= -->
+                <!-- KPI ROW 2                                         -->
+                <!-- ================================================= -->
+
+                <FlexBox
+                    id="row2"
+                    width="100%"
+                    wrap="Wrap"
+                    justifyContent="Center">
+
+                    <GenericTile
+                        id="tilePendingApplications"
+                        header="Pending Applications"
+                        class="sapUiSmallMargin"
+                        press=".onPendingApplicationsPress">
+
+                        <TileContent id="tcPendingApplications">
+
+                            <NumericContent
+                                id="numPendingApplications"
+                                value="{dashboard>/pendingApplications}"
+                                valueColor="Critical"
+                                icon="sap-icon://pending" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="tileTotalShelters"
+                        header="Total Shelters"
+                        class="sapUiSmallMargin"
+                        press=".onSheltersPress">
+
+                        <TileContent id="tcTotalShelters">
+
+                            <NumericContent
+                                id="numTotalShelters"
+                                value="{dashboard>/totalShelters}"
+                                icon="sap-icon://building" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="tileTotalInspections"
+                        header="Total Inspections"
+                        class="sapUiSmallMargin"
+                        press=".onInspectionsPress">
+
+                        <TileContent id="tcTotalInspections">
+
+                            <NumericContent
+                                id="numTotalInspections"
+                                value="{dashboard>/totalInspections}"
+                                icon="sap-icon://inspection" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                </FlexBox>
+
+                <!-- ================================================= -->
+                <!-- KPI ROW 3                                         -->
+                <!-- ================================================= -->
+
+                <FlexBox
+                    id="row3"
+                    width="100%"
+                    wrap="Wrap"
+                    justifyContent="Center">
+
+                    <GenericTile
+                        id="tileTotalAdoptions"
+                        header="Total Adoptions"
+                        class="sapUiSmallMargin"
+                        press=".onAdoptionsPress">
+
+                        <TileContent id="tcTotalAdoptions">
+
+                            <NumericContent
+                                id="numTotalAdoptions"
+                                value="{dashboard>/totalAdoptions}"
+                                valueColor="Good"
+                                icon="sap-icon://accept" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="tileHealthRecords"
+                        header="Health Records"
+                        class="sapUiSmallMargin"
+                        press=".onHealthRecordsPress">
+
+                        <TileContent id="tcHealthRecords">
+
+                            <NumericContent
+                                id="numHealthRecords"
+                                value="{dashboard>/totalHealthRecords}"
+                                icon="sap-icon://clinical-order" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <GenericTile
+                        id="tileUnderTreatment"
+                        header="Under Treatment"
+                        class="sapUiSmallMargin"
+                        press=".onUnderTreatmentPress">
+
+                        <TileContent id="tcUnderTreatment">
+
+                            <NumericContent
+                                id="numUnderTreatment"
+                                value="{dashboard>/animalsUnderTreatment}"
+                                valueColor="Critical"
+                                icon="sap-icon://clinical-task-tracker" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                </FlexBox>
+
+                <!-- ================================================= -->
+                <!-- OVERVIEW                                          -->
+                <!-- ================================================= -->
+
+                <FlexBox
+                    id="overviewSection"
+                    width="100%"
+                    wrap="Wrap"
+                    justifyContent="Center"
+                    alignItems="Start"
+                    class="sapUiLargeMarginTop">
+
+                    <Panel
+                        id="summaryPanel"
+                        width="600px"
+                        class="sapUiSmallMargin"
+                        headerText="System Summary">
+
+                        <VBox
+                            id="summaryBox"
+                            class="sapUiMediumMargin">
+
+                            <ObjectStatus
+                                id="summaryTotalAnimals"
+                                title="Total Animals"
+                                text="{dashboard>/totalAnimals}"
+                                state="Information"
+                                class="sapUiTinyMarginBottom" />
+
+                            <ObjectStatus
+                                id="summaryAvailable"
+                                title="Available Animals"
+                                text="{dashboard>/availableAnimals}"
+                                state="Success"
+                                class="sapUiTinyMarginBottom" />
+
+                            <ObjectStatus
+                                id="summaryAdopted"
+                                title="Adopted Animals"
+                                text="{dashboard>/adoptedAnimals}"
+                                state="Success"
+                                class="sapUiTinyMarginBottom" />
+
+                            <ObjectStatus
+                                id="summaryPending"
+                                title="Pending Applications"
+                                text="{dashboard>/pendingApplications}"
+                                state="Warning"
+                                class="sapUiTinyMarginBottom" />
+
+                            <ObjectStatus
+                                id="summaryShelters"
+                                title="Total Shelters"
+                                text="{dashboard>/totalShelters}"
+                                state="Information"
+                                class="sapUiTinyMarginBottom" />
+
+                            <ObjectStatus
+                                id="summaryInspections"
+                                title="Total Inspections"
+                                text="{dashboard>/totalInspections}"
+                                state="Information"
+                                class="sapUiTinyMarginBottom" />
+
+                            <ObjectStatus
+                                id="summaryAdoptions"
+                                title="Total Adoptions"
+                                text="{dashboard>/totalAdoptions}"
+                                state="Success"
+                                class="sapUiTinyMarginBottom" />
+
+                            <ObjectStatus
+                                id="summaryHealthRecords"
+                                title="Health Records"
+                                text="{dashboard>/totalHealthRecords}"
+                                state="Information" />
+
+                        </VBox>
+
+                    </Panel>
+
+                    <Panel
+                        id="statusPanel"
+                        width="600px"
+                        class="sapUiSmallMargin"
+                        headerText="Animal Status Overview">
+
+                        <VBox
+                            id="statusBox"
+                            class="sapUiMediumMargin">
+
+                            <ObjectStatus
+                                id="statusAvailable"
+                                title="Available"
+                                text="{dashboard>/availableAnimals}"
+                                state="Success"
+                                class="sapUiTinyMarginBottom" />
+
+                            <ObjectStatus
+                                id="statusAdopted"
+                                title="Adopted"
+                                text="{dashboard>/adoptedAnimals}"
+                                state="Information"
+                                class="sapUiTinyMarginBottom" />
+
+                            <ObjectStatus
+                                id="statusTreatment"
+                                title="Under Treatment"
+                                text="{dashboard>/animalsUnderTreatment}"
+                                state="Warning" />
+
+                        </VBox>
+
+                    </Panel>
+
+                </FlexBox>
+
+                <!-- ================================================= -->
+                <!-- DYNAMIC DETAILS                                   -->
+                <!-- ================================================= -->
+
+                <Panel
+                    id="detailsPanel"
+                    width="100%"
+                    visible="false"
+                    expandable="true"
+                    expanded="true"
+                    headerText="{dashboard>/detailsTitle}"
+                    class="sapUiLargeMarginTop">
+
+                    <headerToolbar>
+
+                        <OverflowToolbar id="detailsToolbar">
+
+                            <Title
+                                id="detailsTitle"
+                                text="{dashboard>/detailsTitle}"
+                                level="H3" />
+
+                            <ToolbarSpacer id="detailsToolbarSpacer" />
+
+                            <Button
+                                id="btnRefreshDetails"
+                                text="Refresh"
+                                icon="sap-icon://refresh"
+                                type="Transparent"
+                                press=".onRefreshDetails" />
+
+                            <Button
+                                id="btnCloseDetails"
+                                text="Close"
+                                icon="sap-icon://decline"
+                                type="Transparent"
+                                press=".onCloseDetails" />
+
+                        </OverflowToolbar>
+
+                    </headerToolbar>
+
+                    <List
+                        id="detailsList"
+                        width="100%"
+                        noDataText="No records found"
+                        growing="true"
+                        growingThreshold="10"
+                        growingScrollToLoad="true" />
+
+                </Panel>
+
+                <!-- ================================================= -->
+                <!-- RECENT ADOPTIONS                                  -->
+                <!-- ================================================= -->
+
+                <Panel
+                    id="recentAdoptionsPanel"
+                    width="100%"
+                    headerText="Recent Adoptions"
+                    class="sapUiLargeMarginTop">
+
+                    <List
+                        id="recentAdoptionsList"
+                        width="100%"
+                        noDataText="No recent adoption records found"
+                        growing="true"
+                        growingThreshold="5" />
+
+                </Panel>
+
+                <!-- ================================================= -->
+                <!-- QUICK NAVIGATION                                  -->
+                <!-- ================================================= -->
+
+                <Panel
+                    id="navigationPanel"
+                    width="100%"
+                    headerText="Quick Navigation"
+                    class="sapUiLargeMarginTop">
+
+                    <FlexBox
+                        id="navigationBox"
+                        width="100%"
+                        wrap="Wrap"
+                        justifyContent="Center"
+                        alignItems="Center"
+                        class="sapUiSmallMargin">
+
+                        <Button
+                            id="btnAdminApp"
+                            text="Open Admin App"
+                            width="220px"
+                            icon="sap-icon://manager"
+                            class="sapUiTinyMargin"
+                            type="Emphasized"
+                            press=".onAdminAppPress" />
+
+                        <Button
+                            id="btnWorkflow"
+                            text="Open Workflow App"
+                            width="220px"
+                            icon="sap-icon://workflow-tasks"
+                            class="sapUiTinyMargin"
+                            type="Emphasized"
+                            press=".onWorkflowPress" />
+
+                        <Button
+                            id="btnHealthManagement"
+                            text="Open Health Management"
+                            width="220px"
+                            icon="sap-icon://clinical-order"
+                            class="sapUiTinyMargin"
+                            press=".onHealthManagementPress" />
+
+                        <Button
+                            id="btnInspectionManagement"
+                            text="Open Inspection Management"
+                            width="220px"
+                            icon="sap-icon://inspection"
+                            class="sapUiTinyMargin"
+                            press=".onInspectionManagementPress" />
+
+                        <Button
+                            id="btnHome"
+                            text="Back to Home"
+                            width="220px"
+                            icon="sap-icon://home"
+                            class="sapUiTinyMargin"
+                            press=".onHomePress" />
+
+                    </FlexBox>
+
+                </Panel>
+
+            </VBox>
+
+        </content>
+
+        <!-- ===================================================== -->
+        <!-- FOOTER                                                -->
+        <!-- ===================================================== -->
+
+        <footer>
+
+            <Toolbar id="footerToolbar">
+
+                <Text
+                    id="footerUserText"
+                    text="Signed in: {session>/email}" />
+
+                <ToolbarSpacer id="footerSpacer" />
+
+                <Text
+                    id="footerText"
+                    text="Animal Adoption Management System" />
+
+            </Toolbar>
+
+        </footer>
+
+    </Page>
+
+</mvc:View>

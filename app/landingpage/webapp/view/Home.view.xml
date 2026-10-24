@@ -1,0 +1,389 @@
+<mvc:View
+    controllerName="animaladoption.dashboard.home.landingpage.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page
+        id="homePage"
+        showHeader="false"
+        busyIndicatorDelay="0">
+
+        <content>
+
+            <VBox
+                id="mainContainer"
+                width="100%"
+                alignItems="Center"
+                class="sapUiLargeMargin">
+
+                <!-- ================================================= -->
+                <!-- PUBLIC HEADER                                     -->
+                <!-- ================================================= -->
+
+                <OverflowToolbar
+                    id="homeHeader"
+                    width="100%">
+
+                    <Title
+                        id="mainTitle"
+                        text="Animal Adoption Management System"
+                        level="H1" />
+
+                    <ToolbarSpacer id="headerSpacer" />
+
+                    <ObjectStatus
+                        id="publicStatus"
+                        text="Choose a portal to sign in"
+                        icon="sap-icon://locked"
+                        state="Information" />
+
+                </OverflowToolbar>
+
+                <!-- ================================================= -->
+                <!-- HERO SECTION                                      -->
+                <!-- ================================================= -->
+
+                <VBox
+                    id="heroSection"
+                    width="100%"
+                    alignItems="Center"
+                    class="sapUiLargeMarginTop sapUiLargeMarginBottom">
+
+                    <Title
+                        id="heroTitle"
+                        text="Welcome to the Animal Adoption Portal"
+                        level="H2"
+                        textAlign="Center" />
+
+                    <Text
+                        id="heroDescription"
+                        text="A unified platform for animal adoption, shelter administration, health management and post-adoption inspections."
+                        width="100%"
+                        textAlign="Center"
+                        wrapping="true"
+                        class="sapUiSmallMarginTop" />
+
+                    <ObjectStatus
+                        id="authenticationInfo"
+                        text="Sign in through the portal that matches your assigned role"
+                        icon="sap-icon://key-user-settings"
+                        state="Information"
+                        class="sapUiMediumMarginTop" />
+
+                </VBox>
+
+                <!-- ================================================= -->
+                <!-- PORTAL CARDS                                      -->
+                <!-- ================================================= -->
+
+                <FlexBox
+                    id="portalContainer"
+                    width="100%"
+                    wrap="Wrap"
+                    justifyContent="Center"
+                    alignItems="Stretch">
+
+                    <!-- ================================================= -->
+                    <!-- ADMIN PORTAL                                      -->
+                    <!-- ================================================= -->
+
+                    <Panel
+                        id="adminPanel"
+                        width="400px"
+                        headerText="Admin Portal"
+                        class="sapUiMediumMargin">
+
+                        <VBox
+                            id="adminBox"
+                            width="100%"
+                            alignItems="Center"
+                            class="sapUiMediumMargin">
+
+                            <ObjectStatus
+                                id="adminRoleStatus"
+                                text="Administrator"
+                                icon="sap-icon://shield"
+                                state="Information"
+                                class="sapUiSmallMarginBottom" />
+
+                            <Title
+                                id="adminPortalTitle"
+                                text="Administration and Operations"
+                                level="H3"
+                                textAlign="Center" />
+
+                            <Text
+                                id="adminText"
+                                text="Manage users, shelters, animals, adoption applications, health records and operational workflows."
+                                textAlign="Center"
+                                wrapping="true"
+                                width="100%"
+                                class="sapUiSmallMarginTop" />
+
+                            <VBox
+                                id="adminFeatures"
+                                width="100%"
+                                class="sapUiMediumMarginTop">
+
+                                <ObjectStatus
+                                    id="adminFeatureDashboard"
+                                    text="System dashboard and KPIs"
+                                    icon="sap-icon://business-objects-experience"
+                                    state="None"
+                                    class="sapUiTinyMarginBottom" />
+
+                                <ObjectStatus
+                                    id="adminFeatureWorkflow"
+                                    text="Application review and approval"
+                                    icon="sap-icon://workflow-tasks"
+                                    state="None"
+                                    class="sapUiTinyMarginBottom" />
+
+                                <ObjectStatus
+                                    id="adminFeatureHealth"
+                                    text="Animal health management"
+                                    icon="sap-icon://clinical-order"
+                                    state="None" />
+
+                            </VBox>
+
+                            <Button
+                                id="btnAdminSignIn"
+                                text="Sign In as Administrator"
+                                width="260px"
+                                icon="sap-icon://log"
+                                type="Emphasized"
+                                class="sapUiLargeMarginTop"
+                                press=".onAdminSignIn" />
+
+                        </VBox>
+
+                    </Panel>
+
+                    <!-- ================================================= -->
+                    <!-- USER PORTAL                                       -->
+                    <!-- ================================================= -->
+
+                    <Panel
+                        id="userPanel"
+                        width="400px"
+                        headerText="User Portal"
+                        class="sapUiMediumMargin">
+
+                        <VBox
+                            id="userBox"
+                            width="100%"
+                            alignItems="Center"
+                            class="sapUiMediumMargin">
+
+                            <ObjectStatus
+                                id="userRoleStatus"
+                                text="Adoption User"
+                                icon="sap-icon://customer"
+                                state="Success"
+                                class="sapUiSmallMarginBottom" />
+
+                            <Title
+                                id="userPortalTitle"
+                                text="Find and Adopt an Animal"
+                                level="H3"
+                                textAlign="Center" />
+
+                            <Text
+                                id="userText"
+                                text="Browse available animals, submit adoption applications and track your applications and completed adoptions."
+                                textAlign="Center"
+                                wrapping="true"
+                                width="100%"
+                                class="sapUiSmallMarginTop" />
+
+                            <VBox
+                                id="userFeatures"
+                                width="100%"
+                                class="sapUiMediumMarginTop">
+
+                                <ObjectStatus
+                                    id="userFeatureAnimals"
+                                    text="Browse available animals"
+                                    icon="sap-icon://activity-items"
+                                    state="None"
+                                    class="sapUiTinyMarginBottom" />
+
+                                <ObjectStatus
+                                    id="userFeatureApplications"
+                                    text="Submit and track applications"
+                                    icon="sap-icon://document-text"
+                                    state="None"
+                                    class="sapUiTinyMarginBottom" />
+
+                                <ObjectStatus
+                                    id="userFeatureAdoptions"
+                                    text="View completed adoptions"
+                                    icon="sap-icon://accept"
+                                    state="None" />
+
+                            </VBox>
+
+                            <Button
+                                id="btnUserSignIn"
+                                text="Sign In as Adoption User"
+                                width="260px"
+                                icon="sap-icon://log"
+                                type="Accept"
+                                class="sapUiLargeMarginTop"
+                                press=".onUserSignIn" />
+
+                        </VBox>
+
+                    </Panel>
+
+                    <!-- ================================================= -->
+                    <!-- INSPECTOR PORTAL                                  -->
+                    <!-- ================================================= -->
+
+                    <Panel
+                        id="inspectorPanel"
+                        width="400px"
+                        headerText="Inspector Portal"
+                        class="sapUiMediumMargin">
+
+                        <VBox
+                            id="inspectorBox"
+                            width="100%"
+                            alignItems="Center"
+                            class="sapUiMediumMargin">
+
+                            <ObjectStatus
+                                id="inspectorRoleStatus"
+                                text="Adoption Inspector"
+                                icon="sap-icon://inspection"
+                                state="Warning"
+                                class="sapUiSmallMarginBottom" />
+
+                            <Title
+                                id="inspectorPortalTitle"
+                                text="Post-Adoption Inspections"
+                                level="H3"
+                                textAlign="Center" />
+
+                            <Text
+                                id="inspectorText"
+                                text="Review assigned post-adoption inspections and validate inspection results for completed adoptions."
+                                textAlign="Center"
+                                wrapping="true"
+                                width="100%"
+                                class="sapUiSmallMarginTop" />
+
+                            <VBox
+                                id="inspectorFeatures"
+                                width="100%"
+                                class="sapUiMediumMarginTop">
+
+                                <ObjectStatus
+                                    id="inspectorFeatureSchedule"
+                                    text="View scheduled inspections"
+                                    icon="sap-icon://appointment-2"
+                                    state="None"
+                                    class="sapUiTinyMarginBottom" />
+
+                                <ObjectStatus
+                                    id="inspectorFeatureValidate"
+                                    text="Validate inspection results"
+                                    icon="sap-icon://inspection"
+                                    state="None"
+                                    class="sapUiTinyMarginBottom" />
+
+                                <ObjectStatus
+                                    id="inspectorFeatureRemarks"
+                                    text="Record results and remarks"
+                                    icon="sap-icon://notes"
+                                    state="None" />
+
+                            </VBox>
+
+                            <Button
+                                id="btnInspectorSignIn"
+                                text="Sign In as Inspector"
+                                width="260px"
+                                icon="sap-icon://log"
+                                type="Attention"
+                                class="sapUiLargeMarginTop"
+                                press=".onInspectorSignIn" />
+
+                        </VBox>
+
+                    </Panel>
+
+                </FlexBox>
+
+                <!-- ================================================= -->
+                <!-- INFORMATION SECTION                               -->
+                <!-- ================================================= -->
+
+                <Panel
+                    id="informationPanel"
+                    width="100%"
+                    headerText="Secure Portal Access"
+                    class="sapUiLargeMarginTop">
+
+                    <HBox
+                        id="informationBox"
+                        width="100%"
+                        wrap="Wrap"
+                        alignItems="Center"
+                        justifyContent="Center"
+                        class="sapUiMediumMargin">
+
+                        <ObjectStatus
+                            id="securityStatus"
+                            text="Role-based access"
+                            icon="sap-icon://locked"
+                            state="Success"
+                            class="sapUiMediumMarginEnd" />
+
+                        <ObjectStatus
+                            id="identityStatus"
+                            text="Authenticated identity"
+                            icon="sap-icon://person-placeholder"
+                            state="Information"
+                            class="sapUiMediumMarginEnd" />
+
+                        <ObjectStatus
+                            id="sessionInfoStatus"
+                            text="Secure sign-in and sign-out"
+                            icon="sap-icon://key"
+                            state="Information" />
+
+                    </HBox>
+
+                </Panel>
+
+            </VBox>
+
+        </content>
+
+        <!-- ===================================================== -->
+        <!-- FOOTER                                                -->
+        <!-- ===================================================== -->
+
+        <footer>
+
+            <Toolbar id="footerToolbar">
+
+                <Text
+                    id="footerSecurityText"
+                    text="Secure role-based portal access" />
+
+                <ToolbarSpacer id="footerSpacer" />
+
+                <Text
+                    id="footerText"
+                    text="Animal Adoption Management System" />
+
+            </Toolbar>
+
+        </footer>
+
+    </Page>
+
+</mvc:View>

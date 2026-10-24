@@ -1,0 +1,204 @@
+{
+  "_version": "1.89.0",
+  "sap.app": {
+    "id": "aanimaladoption.workflow.admin.applicationworkflow",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.33.0",
+      "toolsId": "b744a167-8e22-4014-be82-07b9cd4bf97e"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/admin/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "ApplicationWorkflow-display": {
+          "semanticObject": "ApplicationWorkflow",
+          "action": "display",
+          "title": "{{ApplicationWorkflow-display.flpTitle}}",
+          "subTitle": "{{ApplicationWorkflow-display.flpSubtitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.153.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "aanimaladoption.workflow.admin.applicationworkflow.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ListReport.ListReportController": {
+            "controllerName": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension"
+          },
+          "sap.fe.templates.ObjectPage.ObjectPageController": {
+            "controllerName": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension"
+          }
+        }
+      }
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "AdoptionApplicationsList",
+          "target": "AdoptionApplicationsList"
+        },
+        {
+          "pattern": "AdoptionApplications({key}):?query:",
+          "name": "AdoptionApplicationsObjectPage",
+          "target": "AdoptionApplicationsObjectPage"
+        }
+      ],
+      "targets": {
+        "AdoptionApplicationsList": {
+          "type": "Component",
+          "id": "AdoptionApplicationsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/AdoptionApplications",
+              "variantManagement": "Page",
+              "navigation": {
+                "AdoptionApplications": {
+                  "detail": {
+                    "route": "AdoptionApplicationsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  }
+                }
+              },
+              "content": {
+                "header": {
+                  "actions": {
+                    "homeAction": {
+                      "text": "Home",
+                      "icon": "sap-icon://home",
+                      "press": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onHome"
+                    },
+                    "signOutAction": {
+                      "text": "Sign Out",
+                      "icon": "sap-icon://log",
+                      "press": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onSignOut"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "AdoptionApplicationsObjectPage": {
+          "type": "Component",
+          "id": "AdoptionApplicationsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/AdoptionApplications",
+              "content": {
+                "header": {
+                  "actions": {
+                    "homeAction": {
+                      "text": "Home",
+                      "icon": "sap-icon://home",
+                      "press": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onHome"
+                    },
+                    "signOutAction": {
+                      "text": "Sign Out",
+                      "icon": "sap-icon://log",
+                      "press": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onSignOut"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.fe": {
+    "app": {
+      "enableLazyLoading": true
+    }
+  }
+}

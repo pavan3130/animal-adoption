@@ -1,0 +1,482 @@
+<mvc:View
+    controllerName="animaladoption.dashboard.user.userdashboard.controller.userview"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+    <Page
+        id="userDashboardPage"
+        busyIndicatorDelay="0">
+
+        <!-- ===================================================== -->
+        <!-- CUSTOM HEADER WITH SIGNED-IN USER                     -->
+        <!-- ===================================================== -->
+
+        <customHeader>
+
+            <OverflowToolbar id="userDashboardHeader">
+
+                <Title
+                    id="userDashboardTitle"
+                    text="Animal Adoption User Dashboard"
+                    level="H2" />
+
+                <ToolbarSpacer id="headerToolbarSpacer" />
+
+                <Button
+                    id="btnRefreshDashboard"
+                    text="Refresh"
+                    icon="sap-icon://refresh"
+                    type="Transparent"
+                    tooltip="Refresh dashboard"
+                    press=".onRefreshDashboard" />
+
+                <Button
+                    id="btnUserProfile"
+                    text="{session>/displayName}"
+                    icon="sap-icon://person-placeholder"
+                    type="Transparent"
+                    tooltip="Open user profile"
+                    press=".onProfilePress" />
+
+            </OverflowToolbar>
+
+        </customHeader>
+
+        <content>
+
+            <VBox
+                id="mainContainer"
+                width="100%"
+                class="sapUiMediumMargin">
+
+                <!-- ================================================= -->
+                <!-- PORTAL HEADER                                     -->
+                <!-- ================================================= -->
+
+                <ObjectHeader
+                    id="userHeader"
+                    title="Animal Adoption Portal"
+                    intro="Browse available animals and manage your adoption applications">
+
+                    <statuses>
+
+                        <ObjectStatus
+                            id="signedInStatus"
+                            title="Signed in as"
+                            text="{session>/email}"
+                            state="Information" />
+
+                    </statuses>
+
+                    <attributes>
+
+                        <ObjectAttribute
+                            id="userRoleAttribute"
+                            title="Role"
+                            text="{session>/role}" />
+
+                    </attributes>
+
+                </ObjectHeader>
+
+                <!-- ================================================= -->
+                <!-- KPI SECTION                                       -->
+                <!-- ================================================= -->
+
+                <FlexBox
+                    id="kpiContainer"
+                    width="100%"
+                    wrap="Wrap"
+                    justifyContent="Center"
+                    alignItems="Center"
+                    class="sapUiMediumMarginTop">
+
+                    <!-- Available Animals -->
+
+                    <GenericTile
+                        id="availableAnimalsTile"
+                        header="Available Animals"
+                        press=".onAvailableAnimalsPress"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="tcAvailableAnimals">
+
+                            <NumericContent
+                                id="ncAvailableAnimals"
+                                value="{dashboard>/availableAnimals}"
+                                valueColor="Good"
+                                icon="sap-icon://activity-items" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- My Applications -->
+
+                    <GenericTile
+                        id="applicationsTile"
+                        header="My Applications"
+                        press=".onApplicationsTilePress"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="tcApplications">
+
+                            <NumericContent
+                                id="ncApplications"
+                                value="{dashboard>/totalApplications}"
+                                valueColor="Neutral"
+                                icon="sap-icon://document-text" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- My Adoptions -->
+
+                    <GenericTile
+                        id="adoptionsTile"
+                        header="My Adoptions"
+                        press=".onAdoptionsTilePress"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="tcAdoptions">
+
+                            <NumericContent
+                                id="ncAdoptions"
+                                value="{dashboard>/totalAdoptions}"
+                                valueColor="Good"
+                                icon="sap-icon://accept" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                    <!-- My Pending Applications -->
+
+                    <GenericTile
+                        id="pendingApplicationsTile"
+                        header="My Pending Applications"
+                        press=".onApplicationsTilePress"
+                        class="sapUiSmallMargin">
+
+                        <TileContent id="tcPendingApplications">
+
+                            <NumericContent
+                                id="ncPendingApplications"
+                                value="{dashboard>/pendingApplications}"
+                                valueColor="Critical"
+                                icon="sap-icon://pending" />
+
+                        </TileContent>
+
+                    </GenericTile>
+
+                </FlexBox>
+
+                <!-- ================================================= -->
+                <!-- AVAILABLE ANIMALS                                 -->
+                <!-- ================================================= -->
+
+                <Panel
+                    id="availableAnimalsPanel"
+                    width="100%"
+                    headerText="Available Animals for Adoption"
+                    visible="false"
+                    expandable="true"
+                    expanded="true"
+                    class="sapUiLargeMarginTop">
+
+                    <headerToolbar>
+
+                        <OverflowToolbar id="availableAnimalsToolbar">
+
+                            <Title
+                                id="availableAnimalsTitle"
+                                text="Available Animals for Adoption"
+                                level="H3" />
+
+                            <ToolbarSpacer
+                                id="availableAnimalsToolbarSpacer" />
+
+                            <Button
+                                id="btnRefreshAnimals"
+                                text="Refresh"
+                                icon="sap-icon://refresh"
+                                type="Transparent"
+                                press=".onAvailableAnimalsPress" />
+
+                            <Button
+                                id="btnCloseAnimals"
+                                text="Close"
+                                icon="sap-icon://decline"
+                                type="Transparent"
+                                press=".onCloseAvailableAnimals" />
+
+                        </OverflowToolbar>
+
+                    </headerToolbar>
+
+                    <List
+                        id="availableAnimalsList"
+                        width="100%"
+                        mode="None"
+                        showSeparators="Inner"
+                        growing="true"
+                        growingThreshold="10"
+                        noDataText="No animals are currently available for adoption" />
+
+                </Panel>
+
+                <!-- ================================================= -->
+                <!-- MY APPLICATIONS                                   -->
+                <!-- ================================================= -->
+
+                <Panel
+                    id="applicationsPanel"
+                    width="100%"
+                    headerText="My Adoption Applications"
+                    visible="false"
+                    expandable="true"
+                    expanded="true"
+                    class="sapUiLargeMarginTop">
+
+                    <headerToolbar>
+
+                        <OverflowToolbar id="applicationsToolbar">
+
+                            <Title
+                                id="applicationsPanelTitle"
+                                text="My Adoption Applications"
+                                level="H3" />
+
+                            <ToolbarSpacer
+                                id="applicationsToolbarSpacer" />
+
+                            <Button
+                                id="btnRefreshApplications"
+                                text="Refresh"
+                                icon="sap-icon://refresh"
+                                type="Transparent"
+                                press=".onApplicationsTilePress" />
+
+                            <Button
+                                id="btnCloseApplications"
+                                text="Close"
+                                icon="sap-icon://decline"
+                                type="Transparent"
+                                press=".onCloseApplications" />
+
+                        </OverflowToolbar>
+
+                    </headerToolbar>
+
+                    <List
+                        id="applicationsList"
+                        width="100%"
+                        mode="None"
+                        showSeparators="Inner"
+                        growing="true"
+                        growingThreshold="10"
+                        noDataText="No adoption applications found for your account" />
+
+                </Panel>
+
+                <!-- ================================================= -->
+                <!-- MY ADOPTIONS                                      -->
+                <!-- ================================================= -->
+
+                <Panel
+                    id="adoptionsPanel"
+                    width="100%"
+                    headerText="My Completed Adoptions"
+                    visible="false"
+                    expandable="true"
+                    expanded="true"
+                    class="sapUiLargeMarginTop">
+
+                    <headerToolbar>
+
+                        <OverflowToolbar id="adoptionsToolbar">
+
+                            <Title
+                                id="adoptionsPanelTitle"
+                                text="My Completed Adoptions"
+                                level="H3" />
+
+                            <ToolbarSpacer
+                                id="adoptionsToolbarSpacer" />
+
+                            <Button
+                                id="btnRefreshAdoptions"
+                                text="Refresh"
+                                icon="sap-icon://refresh"
+                                type="Transparent"
+                                press=".onAdoptionsTilePress" />
+
+                            <Button
+                                id="btnCloseAdoptions"
+                                text="Close"
+                                icon="sap-icon://decline"
+                                type="Transparent"
+                                press=".onCloseAdoptions" />
+
+                        </OverflowToolbar>
+
+                    </headerToolbar>
+
+                    <List
+                        id="adoptionsList"
+                        width="100%"
+                        mode="None"
+                        showSeparators="Inner"
+                        growing="true"
+                        growingThreshold="10"
+                        noDataText="No completed adoptions found for your account" />
+
+                </Panel>
+
+                <!-- ================================================= -->
+                <!-- USER SUMMARY                                      -->
+                <!-- ================================================= -->
+
+                <Panel
+                    id="summaryPanel"
+                    width="100%"
+                    headerText="My Summary"
+                    class="sapUiLargeMarginTop">
+
+                    <FlexBox
+                        id="summaryBox"
+                        width="100%"
+                        wrap="Wrap"
+                        justifyContent="SpaceAround"
+                        alignItems="Center"
+                        class="sapUiMediumMargin">
+
+                        <ObjectStatus
+                            id="summaryAvailable"
+                            title="Available Animals"
+                            text="{dashboard>/availableAnimals}"
+                            icon="sap-icon://activity-items"
+                            state="Success"
+                            class="sapUiSmallMargin" />
+
+                        <ObjectStatus
+                            id="summaryApplications"
+                            title="My Applications"
+                            text="{dashboard>/totalApplications}"
+                            icon="sap-icon://document-text"
+                            state="Information"
+                            class="sapUiSmallMargin" />
+
+                        <ObjectStatus
+                            id="summaryAdoptions"
+                            title="My Adoptions"
+                            text="{dashboard>/totalAdoptions}"
+                            icon="sap-icon://accept"
+                            state="Success"
+                            class="sapUiSmallMargin" />
+
+                        <ObjectStatus
+                            id="summaryPending"
+                            title="My Pending Applications"
+                            text="{dashboard>/pendingApplications}"
+                            icon="sap-icon://pending"
+                            state="Warning"
+                            class="sapUiSmallMargin" />
+
+                    </FlexBox>
+
+                </Panel>
+
+                <!-- ================================================= -->
+                <!-- QUICK NAVIGATION                                  -->
+                <!-- ================================================= -->
+
+                <Panel
+                    id="navigationPanel"
+                    width="100%"
+                    headerText="Quick Navigation"
+                    class="sapUiLargeMarginTop">
+
+                    <FlexBox
+                        id="navigationBox"
+                        width="100%"
+                        wrap="Wrap"
+                        justifyContent="Center"
+                        alignItems="Center"
+                        class="sapUiSmallMargin">
+
+                        <Button
+                            id="btnAnimals"
+                            text="Browse Animals"
+                            icon="sap-icon://activity-items"
+                            width="190px"
+                            class="sapUiTinyMargin"
+                            type="Emphasized"
+                            press=".onAvailableAnimalsPress" />
+
+                        <Button
+                            id="btnApplications"
+                            text="My Applications"
+                            icon="sap-icon://document-text"
+                            width="190px"
+                            class="sapUiTinyMargin"
+                            press=".onApplicationsTilePress" />
+
+                        <Button
+                            id="btnAdoptions"
+                            text="My Adoptions"
+                            icon="sap-icon://accept"
+                            width="190px"
+                            class="sapUiTinyMargin"
+                            press=".onAdoptionsTilePress" />
+
+                        <Button
+                            id="btnUserApp"
+                            text="Open User App"
+                            icon="sap-icon://open-folder"
+                            width="190px"
+                            class="sapUiTinyMargin"
+                            press=".onUserAppPress" />
+                            <Button
+    id="btnHome"
+    text="Back to Home"
+    icon="sap-icon://home"
+    width="190px"
+    class="sapUiTinyMargin"
+    press=".onHomePress" />
+
+                    </FlexBox>
+
+                </Panel>
+
+            </VBox>
+
+        </content>
+
+        <!-- ===================================================== -->
+        <!-- FOOTER                                                -->
+        <!-- ===================================================== -->
+
+        <footer>
+
+            <Toolbar id="footerToolbar">
+
+                <Text
+                    id="footerUserText"
+                    text="Signed in: {session>/email}" />
+
+                <ToolbarSpacer id="footerSpacer" />
+
+                <Text
+                    id="footerText"
+                    text="Animal Adoption Management System" />
+
+            </Toolbar>
+
+        </footer>
+
+    </Page>
+
+</mvc:View>
