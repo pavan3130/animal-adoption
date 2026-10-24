@@ -308,6 +308,20 @@ onSignOut: function () {
         this._oProfilePopover.close();
     }
 
+    const hostname = window.location.hostname;
+    const isLocalCAPDevelopment =
+        window.location.port === "4004" ||
+        hostname.startsWith("port4004-") ||
+        hostname === "localhost" ||
+        hostname === "127.0.0.1";
+
+    if (isLocalCAPDevelopment) {
+        MessageBox.information(
+            "Local BAS testing uses CAP mock authentication (HTTP Basic), which the browser caches. The /do/logout endpoint is handled by the deployed AppRouter, not by cds watch. To test another account locally, open this app in a private/incognito window or use a separate browser profile. Sign Out will use the AppRouter when the app is deployed."
+        );
+        return;
+    }
+
     window.location.assign("/do/logout");
 },
             // =====================================================
