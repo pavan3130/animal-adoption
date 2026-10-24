@@ -397,7 +397,7 @@ service UserService {
 // INSPECTOR SERVICE
 // ====================================================================
 
-@requires : ['Inspector', 'Admin']
+@restrict : [{ grant: '*', to: ['Inspector', 'Admin'] }]
 service InspectorService {
 
     // =====================================================
