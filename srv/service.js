@@ -33,8 +33,9 @@ const isLocalDummyAuth = () => {
  * In production the XSUAA user identity and application profile are required.
  */
 const getSignedInUser = async (req, fallbackRole) => {
-    const userID = req.user?.id?.trim();
-
+    // In local dummy-auth mode no user credentials are collected. Use a seeded
+    // application profile explicitly for dashboard data and demo workflows.
+    // This branch never runs in production; production continues to use XSUAA.
     if (isLocalDummyAuth()) {
         if (fallbackRole) {
             const demoUser = await SELECT.one
@@ -49,6 +50,7 @@ const getSignedInUser = async (req, fallbackRole) => {
         if (demoUser) return demoUser;
     }
 
+    const userID = req.user?.id?.trim();
     if (!userID || userID === "anonymous") {
         return req.reject(401, "Authentication is required");
     }
