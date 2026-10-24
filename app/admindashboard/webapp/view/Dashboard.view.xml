@@ -65,22 +65,7 @@
                             text="System Overview"
                             state="Information" />
 
-                        <ObjectStatus
-                            id="administratorStatus"
-                            title="Signed in as"
-                            text="{session>/email}"
-                            state="Success" />
-
                     </statuses>
-
-                    <attributes>
-
-                        <ObjectAttribute
-                            id="administratorRole"
-                            title="Role"
-                            text="{session>/role}" />
-
-                    </attributes>
 
                 </ObjectHeader>
 
