@@ -13,7 +13,8 @@ annotate service.Animals with @(
         },
         Description    : {
             Value : breed
-        }
+        },
+        ImageUrl       : photo
     },
 
     UI.SelectionFields : [
@@ -24,6 +25,11 @@ annotate service.Animals with @(
     ],
 
     UI.LineItem : [
+        {
+            $Type : 'UI.DataField',
+            Label : 'Photo',
+            Value : photo
+        },
         {
             $Type : 'UI.DataField',
             Label : 'Animal Name',
@@ -114,3 +120,7 @@ annotate service.Animals with @(
         }
     ]
 );
+// Mark the photo URL so Fiori elements renders it as an image.
+annotate service.Animals with {
+    photo @UI.IsImageUrl : true;
+};
