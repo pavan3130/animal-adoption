@@ -5,6 +5,7 @@ sap.ui.define([
     "sap/m/HBox",
     "sap/m/VBox",
     "sap/m/Text",
+    "sap/m/Image",
     "sap/m/Dialog",
     "sap/m/Label",
     "sap/m/TextArea",
@@ -23,6 +24,7 @@ sap.ui.define([
     HBox,
     VBox,
     Text,
+    Image,
     Dialog,
     Label,
     TextArea,
@@ -46,7 +48,10 @@ sap.ui.define([
 
             onInit: async function () {
                 const oDashboardModel = new JSONModel({
+                    totalAnimals: 0,
                     availableAnimals: 0,
+                    adoptedAnimals: 0,
+                    animalsUnderTreatment: 0,
                     totalApplications: 0,
                     totalAdoptions: 0,
                     pendingApplications: 0
@@ -168,11 +173,6 @@ sap.ui.define([
                     await this._fetchJson(
                         "/odata/v4/user/CurrentUser()"
                     );
-                    if (oUser.role !== "User") {
-    throw new Error(
-        "Adoption User access is required"
-    );
-}
 
                 /*
                  * OData functions usually return structured results
@@ -184,6 +184,10 @@ sap.ui.define([
                     typeof oResponse.value === "object"
                         ? oResponse.value
                         : oResponse;
+
+                if (oUser.role !== "User") {
+                    throw new Error("Adoption User access is required");
+                }
 
                 const sDisplayName = [
                     oUser.firstName,
@@ -329,81 +333,42 @@ onSignOut: function () {
             // =====================================================
 
             loadDashboard: async function () {
-                const oModel =
-                    this.getView().getModel(
-                        "dashboard"
-                    );
-
-                if (!oModel) {
-                    return;
-                }
+                const oModel = this.getView().getModel("dashboard");
+                if (!oModel) return;
 
                 try {
                     const [
-                        oAvailableAnimals,
+                        oAnimalPayload,
                         oTotalApplications,
                         oTotalAdoptions,
                         oPendingApplications
                     ] = await Promise.all([
                         this._fetchJson(
-                            "/odata/v4/user/Animals" +
-                            "?$filter=" +
-                            encodeURIComponent(
-                                "animalStatus eq 'Available'"
-                            ) +
-                            "&$select=ID"
+                            "/odata/v4/user/Animals?$select=ID,animalStatus"
                         ),
-
-                        this._fetchJson(
-                            "/odata/v4/user/MyTotalApplications()"
-                        ),
-
-                        this._fetchJson(
-                            "/odata/v4/user/MyTotalAdoptions()"
-                        ),
-
-                        this._fetchJson(
-                            "/odata/v4/user/MyPendingApplications()"
-                        )
+                        this._fetchJson("/odata/v4/user/MyTotalApplications()"),
+                        this._fetchJson("/odata/v4/user/MyTotalAdoptions()"),
+                        this._fetchJson("/odata/v4/user/MyPendingApplications()")
                     ]);
 
-                    const aAvailableAnimals =
-                        Array.isArray(
-                            oAvailableAnimals.value
-                        )
-                            ? oAvailableAnimals.value
-                            : [];
+                    const aAnimals = Array.isArray(oAnimalPayload.value)
+                        ? oAnimalPayload.value
+                        : [];
+                    const countStatus = (sStatus) =>
+                        aAnimals.filter((oAnimal) => oAnimal.animalStatus === sStatus).length;
 
                     oModel.setData({
-                        availableAnimals:
-                            aAvailableAnimals.length,
-
-                        totalApplications:
-                            Number(
-                                oTotalApplications.value
-                            ) || 0,
-
-                        totalAdoptions:
-                            Number(
-                                oTotalAdoptions.value
-                            ) || 0,
-
-                        pendingApplications:
-                            Number(
-                                oPendingApplications.value
-                            ) || 0
+                        totalAnimals: aAnimals.length,
+                        availableAnimals: countStatus("Available"),
+                        adoptedAnimals: countStatus("Adopted"),
+                        animalsUnderTreatment: countStatus("Under Treatment"),
+                        totalApplications: Number(oTotalApplications.value) || 0,
+                        totalAdoptions: Number(oTotalAdoptions.value) || 0,
+                        pendingApplications: Number(oPendingApplications.value) || 0
                     });
                 } catch (oError) {
-                    console.error(
-                        "Dashboard loading failed:",
-                        oError
-                    );
-
-                    MessageToast.show(
-                        oError.message ||
-                            "Failed to load dashboard"
-                    );
-
+                    console.error("Dashboard loading failed:", oError);
+                    MessageToast.show(oError.message || "Failed to load dashboard");
                     throw oError;
                 }
             },
@@ -506,12 +471,7 @@ onSignOut: function () {
                     try {
                         const oData =
                             await this._fetchJson(
-                                "/odata/v4/user/Animals" +
-                                "?$filter=" +
-                                encodeURIComponent(
-                                    "animalStatus eq 'Available'"
-                                ) +
-                                "&$orderby=name"
+                                "/odata/v4/user/Animals?$orderby=name"
                             );
 
                         const aAnimals =
@@ -522,7 +482,7 @@ onSignOut: function () {
                                 : [];
 
                         oList.setNoDataText(
-                            "No animals are currently available for adoption"
+                            "No animal profiles are currently available"
                         );
 
                         aAnimals.forEach(
@@ -532,55 +492,47 @@ onSignOut: function () {
                                         width: "420px",
 
                                         items: [
-                                            new Text({
-                                                text:
-                                                    oAnimal.name ||
-                                                    "Unnamed Animal"
+                                            new Image({
+                                                src: oAnimal.photo || "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=480&q=80",
+                                                width: "7rem",
+                                                height: "6rem",
+                                                decorative: false,
+                                                densityAware: false
                                             }),
-
                                             new Text({
-                                                text:
-                                                    (
-                                                        oAnimal.species ||
-                                                        "Unknown species"
-                                                    ) +
-                                                    " | " +
-                                                    (
-                                                        oAnimal.breed ||
-                                                        "Unknown breed"
-                                                    )
+                                                text: oAnimal.name || "Unnamed Animal",
+                                                class: "sapUiTinyMarginTop"
                                             }),
-
                                             new Text({
-                                                text:
-                                                    "Age: " +
-                                                    (
-                                                        oAnimal.age ??
-                                                        "Unknown"
-                                                    ) +
-                                                    " | Vaccination: " +
-                                                    (
-                                                        oAnimal.vaccinationStatus ||
-                                                        "Unknown"
-                                                    )
+                                                text: (oAnimal.species || "Unknown species") +
+                                                    " | " + (oAnimal.breed || "Unknown breed")
                                             }),
-
                                             new Text({
-                                                text:
-                                                    oAnimal.description ||
-                                                    "No description available",
-
-                                                wrapping:
-                                                    true
+                                                text: "Gender: " + (oAnimal.gender || "Unknown") +
+                                                    " | Age: " + (oAnimal.age ?? "Unknown") +
+                                                    " | Arrived: " + (oAnimal.arrivalDate || "Unknown")
+                                            }),
+                                            new Text({
+                                                text: "Vaccination: " + (oAnimal.vaccinationStatus || "Unknown") +
+                                                    " | Spayed/neutered: " + (oAnimal.spayedOrNeutered || "Unknown")
+                                            }),
+                                            new ObjectStatus({
+                                                text: oAnimal.animalStatus || "Unknown status",
+                                                state: oAnimal.animalStatus === "Available" ? "Success" :
+                                                    (oAnimal.animalStatus === "Adopted" ? "Information" : "Warning")
+                                            }),
+                                            new Text({
+                                                text: oAnimal.description || "No description available",
+                                                wrapping: true
                                             })
                                         ]
                                     });
 
                                 const oApplyButton =
                                     new Button({
-                                        text: "Apply",
-                                        type:
-                                            "Emphasized",
+                                        text: oAnimal.animalStatus === "Available" ? "Apply to adopt" : (oAnimal.animalStatus || "Unavailable"),
+                                        enabled: oAnimal.animalStatus === "Available",
+                                        type: oAnimal.animalStatus === "Available" ? "Emphasized" : "Transparent",
 
                                         icon:
                                             "sap-icon://add-document",
@@ -659,6 +611,11 @@ onSignOut: function () {
             onApplyForAnimal: function (
                 oAnimal
             ) {
+                if (!oAnimal || oAnimal.animalStatus !== "Available") {
+                    MessageToast.show("Only animals marked Available can be adopted.");
+                    return;
+                }
+
                 const oSession =
                     this.getView()
                         .getModel("session")
