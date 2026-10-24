@@ -701,20 +701,16 @@ onSignOut: function () {
                                 oAnimal.name ||
                                     "Unnamed Animal",
 
-                                (
-                                    oAnimal.species ||
-                                    "Unknown species"
-                                ) +
-                                    " | " +
-                                    (
-                                        oAnimal.breed ||
-                                        "Unknown breed"
-                                    ) +
-                                    " | Age: " +
-                                    (
-                                        oAnimal.age ??
-                                        "Unknown"
-                                    ),
+                                [
+                                    oAnimal.species || "Unknown species",
+                                    oAnimal.breed || "Unknown breed",
+                                    "Gender: " + (oAnimal.gender || "Unknown"),
+                                    "Age: " + (oAnimal.age ?? "Unknown"),
+                                    "Arrived: " + (oAnimal.arrivalDate || "Unknown"),
+                                    "Vaccination: " + (oAnimal.vaccinationStatus || "Unknown"),
+                                    "Spayed/neutered: " + (oAnimal.spayedOrNeutered || "Unknown"),
+                                    oAnimal.description || "No description available"
+                                ].join(" | "),
 
                                 oAnimal.animalStatus
                             );
