@@ -33,7 +33,7 @@
 
                     <ObjectStatus
                         id="publicStatus"
-                        text="Choose a portal to sign in"
+                        text="Choose a dashboard"
                         icon="sap-icon://locked"
                         state="Information" />
 
@@ -65,7 +65,7 @@
 
                     <ObjectStatus
                         id="authenticationInfo"
-                        text="Sign in through the portal that matches your assigned role"
+                        text="Access is managed by your SAP BTP account and assigned role"
                         icon="sap-icon://key-user-settings"
                         state="Information"
                         class="sapUiMediumMarginTop" />
@@ -149,7 +149,7 @@
 
                             <Button
                                 id="btnAdminSignIn"
-                                text="Sign In as Administrator"
+                                text="Open Admin Dashboard"
                                 width="260px"
                                 icon="sap-icon://log"
                                 type="Emphasized"
@@ -226,7 +226,7 @@
 
                             <Button
                                 id="btnUserSignIn"
-                                text="Sign In as Adoption User"
+                                text="Open Adoption Dashboard"
                                 width="260px"
                                 icon="sap-icon://log"
                                 type="Accept"
@@ -303,7 +303,7 @@
 
                             <Button
                                 id="btnInspectorSignIn"
-                                text="Sign In as Inspector"
+                                text="Open Inspection Dashboard"
                                 width="260px"
                                 icon="sap-icon://log"
                                 type="Attention"
