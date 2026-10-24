@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-  "node": "22.x"
-},
+    "node": "22.x"
+  },
   "dependencies": {
     "@cap-js/hana": "^3.1.2",
     "@sap/cds": "^10.1.1",
@@ -43,33 +43,7 @@
     "requires": {
       "auth": {
         "[development]": {
-          "kind": "mocked",
-          "users": {
-            "pavan@example.com": {
-              "password": "pavan",
-              "roles": [
-                "User"
-              ]
-            },
-            "sneha@example.com": {
-              "password": "sneha",
-              "roles": [
-                "User"
-              ]
-            },
-            "rahul@example.com": {
-              "password": "rahul",
-              "roles": [
-                "Inspector"
-              ]
-            },
-            "admin@example.com": {
-              "password": "admin",
-              "roles": [
-                "Admin"
-              ]
-            }
-          }
+          "kind": "dummy"
         },
         "[production]": {
           "kind": "xsuaa"
