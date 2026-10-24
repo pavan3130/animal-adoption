@@ -32,7 +32,7 @@
 
                 <Button
                     id="btnUserProfile"
-                    text="{session>/displayName}"
+                    text="Account"
                     icon="sap-icon://person-placeholder"
                     type="Transparent"
                     tooltip="Open user profile"
@@ -57,25 +57,6 @@
                     id="userHeader"
                     title="Animal Adoption Portal"
                     intro="Browse all animal profiles, check their status, and manage adoption applications. Only available animals can be applied for.">
-
-                    <statuses>
-
-                        <ObjectStatus
-                            id="signedInStatus"
-                            title="Signed in as"
-                            text="{session>/email}"
-                            state="Information" />
-
-                    </statuses>
-
-                    <attributes>
-
-                        <ObjectAttribute
-                            id="userRoleAttribute"
-                            title="Role"
-                            text="{session>/role}" />
-
-                    </attributes>
 
                 </ObjectHeader>
 
