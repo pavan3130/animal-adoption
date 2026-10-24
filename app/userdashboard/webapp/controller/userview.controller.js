@@ -575,17 +575,17 @@ onSignOut: function () {
                         );
                     } catch (oError) {
                         console.error(
-                            "Available animals loading failed:",
+                            "Animal directory loading failed:",
                             oError
                         );
 
                         oList.setNoDataText(
-                            "Unable to load available animals"
+                            "Unable to load animal profiles"
                         );
 
                         MessageToast.show(
                             oError.message ||
-                                "Failed to load available animals"
+                                "Failed to load animal directory"
                         );
                     } finally {
                         oList.setBusy(false);
