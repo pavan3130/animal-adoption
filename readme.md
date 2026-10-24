@@ -24,6 +24,27 @@ npm run watch-applicationworkflow
 npm run watch-healthmanagement
 ```
 
+## Repair the local BAS install and reload sample records
+
+The local development database uses SQLite (`@cap-js/sqlite`); production uses SAP HANA Cloud. After pulling changes to dependencies or sample CSVs, regenerate local dependencies and—if you want to reload the checked-in sample data—reset the local SQLite database.
+
+```bash
+# Optional backup of any records you created locally
+cp db.sqlite db.sqlite.backup 2>/dev/null || true
+
+# Regenerate dependencies for all app workspaces
+rm -rf node_modules app/*/node_modules
+rm -f package-lock.json
+
+# Remove the local database so CAP can recreate it from db/schema.cds and db/data/*.csv
+rm -f db.sqlite
+
+npm install
+npm run watch-landingpage
+```
+
+The landing page should open without a username/password prompt in local BAS development. Open the other apps with the `watch-*` scripts listed above. Do not use the local dummy-auth profile in production.
+
 ## Production sign-in using SAP BTP
 
 The production authentication profile remains `xsuaa`. The deployed AppRouter starts SAP BTP/XSUAA sign-in for protected dashboard and OData routes; this project does not need a custom username/password form.
