@@ -23,7 +23,6 @@ const isLocalDummyAuth = () => {
     const profiles = cds.env.profiles || [];
     return (
         cds.env.requires?.auth?.kind === "dummy" &&
-        profiles.includes("development") &&
         !profiles.includes("production")
     );
 };
