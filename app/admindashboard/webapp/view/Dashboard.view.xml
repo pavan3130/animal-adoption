@@ -32,7 +32,7 @@
 
                 <Button
                     id="btnAdminProfile"
-                    text="{session>/displayName}"
+                    text="Account"
                     icon="sap-icon://person-placeholder"
                     type="Transparent"
                     tooltip="Administrator profile"
