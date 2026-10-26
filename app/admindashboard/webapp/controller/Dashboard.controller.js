@@ -174,13 +174,7 @@ loadCurrentAdministrator: async function () {
             ? oResponse.value
             : oResponse;
 
-    if (oUser.role !== "Admin") {
-        throw new Error(
-            "Administrator access is required"
-        );
-    }
-
-    const sDisplayName = [
+const sDisplayName = [
         oUser.firstName,
         oUser.lastName
     ]
@@ -270,21 +264,6 @@ onProfilePress: function (oEvent) {
                                         this
                                     )
                             }),
-
-                            new ToolbarSpacer(),
-
-                            new Button({
-                                text: "Sign Out",
-                                icon:
-                                    "sap-icon://log",
-
-                                type: "Reject",
-
-                                press:
-                                    this.onSignOut.bind(
-                                        this
-                                    )
-                            })
                         ]
                     })
             });
@@ -298,15 +277,8 @@ onProfilePress: function (oEvent) {
         oEvent.getSource()
     );
 },
-onSignOut: function () {
-    if (this._oProfilePopover) {
-        this._oProfilePopover.close();
-    }
 
-    window.location.assign("/do/logout");
-},
-
-            // =====================================================
+// =====================================================
             // LOAD DASHBOARD
             // =====================================================
 
