@@ -61,7 +61,7 @@
                                     <ObjectStatus id="adminFeatureWorkflow" text="Application review and approval" icon="sap-icon://workflow-tasks"/>
                                     <ObjectStatus id="adminFeatureHealth" text="Animal health management" icon="sap-icon://clinical-order"/>
                                 </VBox>
-                                <Button id="btnAdminSignIn" text="Enter admin portal" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Emphasized" class="portalButton" press=".onAdminSignIn"/>
+                                <Button id="btnAdminPortal" text="Open admin workspace" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Emphasized" class="portalButton" press=".onOpenAdminPortal"/>
                             </VBox>
                         </Panel>
 
@@ -78,7 +78,7 @@
                                     <ObjectStatus id="userFeatureApplications" text="Submit and track applications" icon="sap-icon://document-text"/>
                                     <ObjectStatus id="userFeatureAdoptions" text="View completed adoptions" icon="sap-icon://accept"/>
                                 </VBox>
-                                <Button id="btnUserSignIn" text="Find your companion" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Accept" class="portalButton userPortalButton" press=".onUserSignIn"/>
+                                <Button id="btnUserPortal" text="Browse adoptable animals" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Accept" class="portalButton userPortalButton" press=".onOpenUserPortal"/>
                             </VBox>
                         </Panel>
 
@@ -95,7 +95,7 @@
                                     <ObjectStatus id="inspectorFeatureValidate" text="Validate inspection results" icon="sap-icon://inspection"/>
                                     <ObjectStatus id="inspectorFeatureRemarks" text="Record results and remarks" icon="sap-icon://notes"/>
                                 </VBox>
-                                <Button id="btnInspectorSignIn" text="Enter inspector portal" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Attention" class="portalButton inspectorPortalButton" press=".onInspectorSignIn"/>
+                                <Button id="btnInspectorPortal" text="Open inspector workspace" width="100%" icon="sap-icon://arrow-right" iconFirst="false" type="Attention" class="portalButton inspectorPortalButton" press=".onOpenInspectorPortal"/>
                             </VBox>
                         </Panel>
                     </FlexBox>
@@ -127,9 +127,9 @@
 
                 <Panel id="informationPanel" width="100%" class="trustPanel">
                     <HBox id="informationBox" width="100%" wrap="Wrap" alignItems="Center" justifyContent="Center" class="trustItems">
-                        <ObjectStatus id="securityStatus" text="Role-based access" icon="sap-icon://locked" state="Success"/>
-                        <ObjectStatus id="identityStatus" text="Authenticated identity" icon="sap-icon://person-placeholder" state="Information"/>
-                        <ObjectStatus id="sessionInfoStatus" text="Secure sign-in and sign-out" icon="sap-icon://key" state="Information"/>
+                        <ObjectStatus id="securityStatus" text="Access managed by SAP BTP" icon="sap-icon://locked" state="Success"/>
+                        <ObjectStatus id="identityStatus" text="Sign-in managed by SAP BTP" icon="sap-icon://person-placeholder" state="Information"/>
+                        <ObjectStatus id="sessionInfoStatus" text="Assign role collections in BTP Cockpit" icon="sap-icon://key" state="Information"/>
                     </HBox>
                 </Panel>
             </VBox>
