@@ -32,7 +32,7 @@
 
                 <Button
                     id="btnUserProfile"
-                    text="Account"
+                    text="{session>/displayName}"
                     icon="sap-icon://person-placeholder"
                     type="Transparent"
                     tooltip="Open user profile"
@@ -56,7 +56,26 @@
                 <ObjectHeader
                     id="userHeader"
                     title="Animal Adoption Portal"
-                    intro="Browse all animal profiles, check their status, and manage adoption applications. Only available animals can be applied for.">
+                    intro="Browse available animals and manage your adoption applications">
+
+                    <statuses>
+
+                        <ObjectStatus
+                            id="signedInStatus"
+                            title="Signed in as"
+                            text="{session>/email}"
+                            state="Information" />
+
+                    </statuses>
+
+                    <attributes>
+
+                        <ObjectAttribute
+                            id="userRoleAttribute"
+                            title="Role"
+                            text="{session>/role}" />
+
+                    </attributes>
 
                 </ObjectHeader>
 
@@ -90,47 +109,6 @@
 
                         </TileContent>
 
-                    </GenericTile>
-
-                    <!-- All animal profile KPIs -->
-
-                    <GenericTile
-                        id="totalAnimalsTile"
-                        header="Total Animals"
-                        class="sapUiSmallMargin">
-                        <TileContent id="tcTotalAnimals">
-                            <NumericContent
-                                id="ncTotalAnimals"
-                                value="{dashboard>/totalAnimals}"
-                                valueColor="Neutral"
-                                icon="sap-icon://database" />
-                        </TileContent>
-                    </GenericTile>
-
-                    <GenericTile
-                        id="adoptedAnimalsTile"
-                        header="Adopted Animals"
-                        class="sapUiSmallMargin">
-                        <TileContent id="tcAdoptedAnimals">
-                            <NumericContent
-                                id="ncAdoptedAnimals"
-                                value="{dashboard>/adoptedAnimals}"
-                                valueColor="Good"
-                                icon="sap-icon://accept" />
-                        </TileContent>
-                    </GenericTile>
-
-                    <GenericTile
-                        id="animalsUnderTreatmentTile"
-                        header="Under Treatment"
-                        class="sapUiSmallMargin">
-                        <TileContent id="tcAnimalsUnderTreatment">
-                            <NumericContent
-                                id="ncAnimalsUnderTreatment"
-                                value="{dashboard>/animalsUnderTreatment}"
-                                valueColor="Critical"
-                                icon="sap-icon://clinical-order" />
-                        </TileContent>
                     </GenericTile>
 
                     <!-- My Applications -->
@@ -202,7 +180,7 @@
                 <Panel
                     id="availableAnimalsPanel"
                     width="100%"
-                    headerText="Animal Directory"
+                    headerText="Available Animals for Adoption"
                     visible="false"
                     expandable="true"
                     expanded="true"
@@ -214,7 +192,7 @@
 
                             <Title
                                 id="availableAnimalsTitle"
-                                text="Animal Directory"
+                                text="Available Animals for Adoption"
                                 level="H3" />
 
                             <ToolbarSpacer
@@ -245,7 +223,7 @@
                         showSeparators="Inner"
                         growing="true"
                         growingThreshold="10"
-                        noDataText="No animal profiles are currently available" />
+                        noDataText="No animals are currently available for adoption" />
 
                 </Panel>
 
