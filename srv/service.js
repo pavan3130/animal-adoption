@@ -19,37 +19,49 @@ export default cds.service.impl(async function () {
 // AUTHENTICATED USER HELPER
 // =====================================================
 
-const getSignedInUser = async (req) => {
-    const userID =
-        req.user?.id?.trim();
+const getSignedInUser = async (req, expectedRole) => {
+    // XSUAA commonly exposes email as a user attribute. The CAP user ID is
+    // also checked for environments where the ID itself is the email address.
+    const identities = [
+        req.user?.attr?.email,
+        req.user?.attr?.mail,
+        req.user?.id
+    ]
+        .filter((value) => typeof value === "string")
+        .map((value) => value.trim())
+        .filter((value) => value && value !== "anonymous" && value !== "dummy");
 
-    if (
-        !userID ||
-        userID === "anonymous"
-    ) {
-        return req.reject(
-            401,
-            "Authentication is required"
-        );
+    let user;
+    for (const identity of [...new Set(identities)]) {
+        user = await SELECT.one
+            .from(Users)
+            .where({ email: identity });
+        if (user) break;
     }
 
-    const user = await SELECT.one
-        .from(Users)
-        .where({
-            email: userID
-        });
+    // CAP dummy authentication is development-only and avoids mock credential
+    // prompts. Use the seeded role-matched profile for local UI development.
+    if (
+        !user &&
+        cds.env.profiles?.includes("development") &&
+        expectedRole
+    ) {
+        user = await SELECT.one
+            .from(Users)
+            .where({ role: expectedRole, status: "Active" });
+    }
 
     if (!user) {
         return req.reject(
             404,
-            "No application profile exists for the signed-in account"
+            "No active application profile exists for this account. Ask an administrator to create the profile."
         );
     }
 
     if (user.status !== "Active") {
         return req.reject(
             403,
-            "The signed-in user profile is not active"
+            "The application profile is not active"
         );
     }
 
@@ -345,7 +357,7 @@ const getSignedInUser = async (req) => {
 
 this.on("CurrentSession", async (req) => {
     const user =
-        await getSignedInUser(req);
+        await getSignedInUser(req, "Admin");
 
     return {
         ID: user.ID,
@@ -363,14 +375,7 @@ this.on("CurrentSession", async (req) => {
 
 this.on("CurrentUser", async (req) => {
     const user =
-        await getSignedInUser(req);
-
-    if (user.role !== "User") {
-        return req.reject(
-            403,
-            "Only adoption users can access the user dashboard"
-        );
-    }
+        await getSignedInUser(req, "User");
 
     return {
         ID: user.ID,
@@ -390,7 +395,7 @@ this.on(
     "MyTotalApplications",
     async (req) => {
         const user =
-            await getSignedInUser(req);
+            await getSignedInUser(req, "User");
 
         const applications =
             await SELECT
@@ -407,7 +412,7 @@ this.on(
     "MyPendingApplications",
     async (req) => {
         const user =
-            await getSignedInUser(req);
+            await getSignedInUser(req, "User");
 
         const applications =
             await SELECT
@@ -428,7 +433,7 @@ this.on(
     "MyTotalAdoptions",
     async (req) => {
         const user =
-            await getSignedInUser(req);
+            await getSignedInUser(req, "User");
 
         const applications =
             await SELECT
@@ -474,14 +479,7 @@ this.on(
         } = req.data;
 
         const applicant =
-            await getSignedInUser(req);
-
-        if (applicant.role !== "User") {
-            return req.reject(
-                403,
-                "Only adoption users can submit applications"
-            );
-        }
+            await getSignedInUser(req, "User");
 
         if (!animalID) {
             return req.reject(
@@ -891,7 +889,7 @@ this.on(
 
         if (!isAdmin) {
             const signedInUser =
-                await getSignedInUser(req);
+                await getSignedInUser(req, "User");
 
             if (
                 application.applicant_ID !==
