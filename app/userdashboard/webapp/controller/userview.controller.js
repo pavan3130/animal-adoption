@@ -168,13 +168,7 @@ sap.ui.define([
                     await this._fetchJson(
                         "/odata/v4/user/CurrentUser()"
                     );
-                    if (oUser.role !== "User") {
-    throw new Error(
-        "Adoption User access is required"
-    );
-}
-
-                /*
+/*
                  * OData functions usually return structured results
                  * directly. The fallback supports responses wrapped
                  * inside a value property.
@@ -280,15 +274,6 @@ sap.ui.define([
             type: "Transparent",
             press: this.onHomePress.bind(this)
         }),
-
-        new ToolbarSpacer(),
-
-        new Button({
-            text: "Sign Out",
-            icon: "sap-icon://log",
-            type: "Reject",
-            press: this.onSignOut.bind(this)
-        })
     ]
 })
                         });
@@ -303,14 +288,7 @@ sap.ui.define([
                 );
             },
 
-onSignOut: function () {
-    if (this._oProfilePopover) {
-        this._oProfilePopover.close();
-    }
-
-    window.location.assign("/do/logout");
-},
-            // =====================================================
+// =====================================================
             // DASHBOARD KPIs
             // =====================================================
 
