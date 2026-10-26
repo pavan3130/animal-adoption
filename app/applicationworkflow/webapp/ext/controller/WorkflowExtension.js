@@ -6,17 +6,11 @@ sap.ui.define([
     "use strict";
 
     return ControllerExtension.extend(
-        "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension",
+        "animaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension",
         {
             onHome: function () {
                 window.location.assign(
                     "/animaladoption.dashboard.home.landingpage/index.html"
-                );
-            },
-
-            onSignOut: function () {
-                window.location.assign(
-                    "/do/logout"
                 );
             }
         }
