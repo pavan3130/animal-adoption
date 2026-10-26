@@ -150,11 +150,6 @@
                       "text": "Home",
                       "icon": "sap-icon://home",
                       "press": "animaladoption.health.admin.healthmanagement.ext.controller.HealthExtension.onHome"
-                    },
-                    "signOutAction": {
-                      "text": "Sign Out",
-                      "icon": "sap-icon://log",
-                      "press": "animaladoption.health.admin.healthmanagement.ext.controller.HealthExtension.onSignOut"
                     }
                   }
                 }
@@ -177,11 +172,6 @@
                       "text": "Home",
                       "icon": "sap-icon://home",
                       "press": "animaladoption.health.admin.healthmanagement.ext.controller.HealthExtension.onHome"
-                    },
-                    "signOutAction": {
-                      "text": "Sign Out",
-                      "icon": "sap-icon://log",
-                      "press": "animaladoption.health.admin.healthmanagement.ext.controller.HealthExtension.onSignOut"
                     }
                   }
                 }
