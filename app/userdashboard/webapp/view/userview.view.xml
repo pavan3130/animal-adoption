@@ -5,7 +5,8 @@
 
     <Page
         id="userDashboardPage"
-        busyIndicatorDelay="0">
+        busyIndicatorDelay="0"
+        class="pawDashboardPage userDashboardPage">
 
         <!-- ===================================================== -->
         <!-- CUSTOM HEADER WITH SIGNED-IN USER                     -->
@@ -13,7 +14,7 @@
 
         <customHeader>
 
-            <OverflowToolbar id="userDashboardHeader">
+            <OverflowToolbar id="userDashboardHeader" class="pawDashboardHeader">
 
                 <Title
                     id="userDashboardTitle"
@@ -47,7 +48,7 @@
             <VBox
                 id="mainContainer"
                 width="100%"
-                class="sapUiMediumMargin">
+                class="sapUiMediumMargin pawDashboardContent">
 
                 <!-- ================================================= -->
                 <!-- PORTAL HEADER                                     -->
