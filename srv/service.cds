@@ -445,7 +445,9 @@ service InspectorService {
 // ====================================================================
 // SESSION SERVICE
 // ====================================================================
-@requires : 'authenticated-user'
+// This profile endpoint is only for the Admin workspace. In production, the
+// Admin scope is supplied by an XSUAA role collection assigned in BTP Cockpit.
+@requires : 'Admin'
 service SessionService {
 
     function CurrentSession()
