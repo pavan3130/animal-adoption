@@ -150,11 +150,6 @@
                       "text": "Home",
                       "icon": "sap-icon://home",
                       "press": "animaladoption.admin.sprintproject.ext.controller.AdminExtension.onHome"
-                    },
-                    "signOutAction": {
-                      "text": "Sign Out",
-                      "icon": "sap-icon://log",
-                      "press": "animaladoption.admin.sprintproject.ext.controller.AdminExtension.onSignOut"
                     }
                   }
                 }
@@ -177,11 +172,6 @@
                       "text": "Home",
                       "icon": "sap-icon://home",
                       "press": "animaladoption.admin.sprintproject.ext.controller.AdminExtension.onHome"
-                    },
-                    "signOutAction": {
-                      "text": "Sign Out",
-                      "icon": "sap-icon://log",
-                      "press": "animaladoption.admin.sprintproject.ext.controller.AdminExtension.onSignOut"
                     }
                   }
                 }
