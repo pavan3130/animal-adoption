@@ -43,33 +43,7 @@
     "requires": {
       "auth": {
         "[development]": {
-          "kind": "mocked",
-          "users": {
-            "pavan@example.com": {
-              "password": "pavan",
-              "roles": [
-                "User"
-              ]
-            },
-            "sneha@example.com": {
-              "password": "sneha",
-              "roles": [
-                "User"
-              ]
-            },
-            "rahul@example.com": {
-              "password": "rahul",
-              "roles": [
-                "Inspector"
-              ]
-            },
-            "admin@example.com": {
-              "password": "admin",
-              "roles": [
-                "Admin"
-              ]
-            }
-          }
+          "kind": "dummy"
         },
         "[production]": {
           "kind": "xsuaa"
