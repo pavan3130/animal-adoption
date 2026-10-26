@@ -16,10 +16,10 @@ export default cds.service.impl(async function () {
     const today = () =>
         new Date().toISOString().slice(0, 10);
 // =====================================================
-// AUTHENTICATED USER HELPER
+// APPLICATION PROFILE RESOLUTION
 // =====================================================
 
-const getSignedInUser = async (req, expectedRole) => {
+const getApplicationProfile = async (req, expectedRole) => {
     // XSUAA commonly exposes email as a user attribute. The CAP user ID is
     // also checked for environments where the ID itself is the email address.
     const identities = [
@@ -352,12 +352,12 @@ const getSignedInUser = async (req, expectedRole) => {
         return "Application Deleted";
     });
 // =====================================================
-// CURRENT AUTHENTICATED SESSION
+// CURRENT ADMIN PROFILE
 // =====================================================
 
 this.on("CurrentSession", async (req) => {
     const user =
-        await getSignedInUser(req, "Admin");
+        await getApplicationProfile(req, "Admin");
 
     return {
         ID: user.ID,
@@ -370,12 +370,12 @@ this.on("CurrentSession", async (req) => {
 });
 
 // =====================================================
-// CURRENT SIGNED-IN USER
+// CURRENT ADOPTION USER PROFILE
 // =====================================================
 
 this.on("CurrentUser", async (req) => {
     const user =
-        await getSignedInUser(req, "User");
+        await getApplicationProfile(req, "User");
 
     return {
         ID: user.ID,
@@ -395,7 +395,7 @@ this.on(
     "MyTotalApplications",
     async (req) => {
         const user =
-            await getSignedInUser(req, "User");
+            await getApplicationProfile(req, "User");
 
         const applications =
             await SELECT
@@ -412,7 +412,7 @@ this.on(
     "MyPendingApplications",
     async (req) => {
         const user =
-            await getSignedInUser(req, "User");
+            await getApplicationProfile(req, "User");
 
         const applications =
             await SELECT
@@ -433,7 +433,7 @@ this.on(
     "MyTotalAdoptions",
     async (req) => {
         const user =
-            await getSignedInUser(req, "User");
+            await getApplicationProfile(req, "User");
 
         const applications =
             await SELECT
@@ -479,7 +479,7 @@ this.on(
         } = req.data;
 
         const applicant =
-            await getSignedInUser(req, "User");
+            await getApplicationProfile(req, "User");
 
         if (!animalID) {
             return req.reject(
@@ -889,7 +889,7 @@ this.on(
 
         if (!isAdmin) {
             const signedInUser =
-                await getSignedInUser(req, "User");
+                await getApplicationProfile(req, "User");
 
             if (
                 application.applicant_ID !==
