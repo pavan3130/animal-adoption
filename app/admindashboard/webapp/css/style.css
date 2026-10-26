@@ -1,1 +1,117 @@
-/* Enter your custom styles here */
+/* Paw Haven dashboard styling — responsive, neutral SAP Horizon-friendly surfaces */
+
+.pawDashboardPage,
+.pawDashboardPage .sapMPageBgStandard {
+    background: #f5f7f9;
+}
+
+.pawDashboardHeader.sapMOTB {
+    min-height: 4.25rem;
+    padding: 0 1.25rem;
+    background: rgba(255, 255, 255, 0.98);
+    border-bottom: 1px solid #e3e8ee;
+    box-shadow: 0 3px 14px rgba(22, 47, 74, 0.05);
+}
+
+.pawDashboardHeader .sapMTitle {
+    color: #20364d;
+    font-size: 1.15rem;
+    font-weight: 750;
+}
+
+.pawDashboardHeader .sapMBtnInner {
+    border-radius: 0.6rem;
+}
+
+.pawDashboardContent {
+    box-sizing: border-box;
+    width: calc(100% - 2rem);
+    max-width: 1440px;
+    margin: 1.25rem auto 2rem !important;
+    padding: 0.25rem;
+}
+
+.pawDashboardContent .sapMOH,
+.pawDashboardContent .sapMPanel {
+    overflow: hidden;
+    border: 1px solid #e3e8ee;
+    border-radius: 0.9rem;
+    background: #ffffff;
+    box-shadow: 0 5px 20px rgba(29, 51, 75, 0.045);
+}
+
+.pawDashboardContent .sapMOH {
+    padding: 1rem 1.15rem;
+    margin-bottom: 1rem;
+}
+
+.pawDashboardContent .sapMOHTitle h1,
+.pawDashboardContent .sapMOHTitle h2,
+.pawDashboardContent .sapMOHTitle h3 {
+    color: #20364d;
+    font-weight: 750;
+}
+
+.pawDashboardContent .sapMPanelHdr {
+    color: #20364d;
+    font-weight: 700;
+    background: #ffffff;
+    border-bottom-color: #e9edf2;
+}
+
+.pawDashboardContent .sapMPanelContent {
+    background: #ffffff;
+}
+
+.pawDashboardContent .sapMListTblHeaderCell,
+.pawDashboardContent .sapMTableTH {
+    background: #f7f9fb;
+}
+
+.pawDashboardContent .sapMListTblHeaderCell .sapMText,
+.pawDashboardContent .sapMTableTH .sapMText {
+    color: #526579;
+    font-weight: 700;
+}
+
+.pawDashboardContent .sapMListTblRow:hover {
+    background: #f6f9fc;
+}
+
+.pawDashboardContent .sapMBtnInner {
+    border-radius: 0.55rem;
+}
+
+.pawDashboardContent .sapMInputBaseContentWrapper,
+.pawDashboardContent .sapMSlt,
+.pawDashboardContent .sapMComboBoxBase .sapMInputBaseContentWrapper {
+    border-radius: 0.5rem;
+}
+
+.pawDashboardContent .sapMObjectNumber {
+    color: #245d87;
+}
+
+.pawDashboardContent .sapMObjStatus {
+    line-height: 1.5;
+}
+
+@media (max-width: 760px) {
+    .pawDashboardHeader.sapMOTB {
+        padding: 0 0.5rem;
+    }
+
+    .pawDashboardHeader .sapMTitle {
+        font-size: 1rem;
+    }
+
+    .pawDashboardContent {
+        width: calc(100% - 0.75rem);
+        margin-top: 0.5rem !important;
+        padding: 0;
+    }
+
+    .pawDashboardContent .sapMOH {
+        padding: 0.75rem;
+    }
+}
