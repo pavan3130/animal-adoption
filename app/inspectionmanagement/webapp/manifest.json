@@ -150,11 +150,6 @@
                       "text": "Home",
                       "icon": "sap-icon://home",
                       "press": "animaladoption.inspection.inspectionmanagement.ext.controller.InspectionExtension.onHome"
-                    },
-                    "signOutAction": {
-                      "text": "Sign Out",
-                      "icon": "sap-icon://log",
-                      "press": "animaladoption.inspection.inspectionmanagement.ext.controller.InspectionExtension.onSignOut"
                     }
                   }
                 }
@@ -177,11 +172,6 @@
                       "text": "Home",
                       "icon": "sap-icon://home",
                       "press": "animaladoption.inspection.inspectionmanagement.ext.controller.InspectionExtension.onHome"
-                    },
-                    "signOutAction": {
-                      "text": "Sign Out",
-                      "icon": "sap-icon://log",
-                      "press": "animaladoption.inspection.inspectionmanagement.ext.controller.InspectionExtension.onSignOut"
                     }
                   }
                 }
