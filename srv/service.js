@@ -19,19 +19,29 @@ export default cds.service.impl(async function () {
 // APPLICATION PROFILE RESOLUTION
 // =====================================================
 
+const profileProvisioning = new Map();
+
 const getApplicationProfile = async (req, expectedRole) => {
-    // XSUAA commonly exposes email as a user attribute. The CAP user ID is
-    // also checked for environments where the ID itself is the email address.
+    const attributes = req.user?.attr || {};
+    const rawEmail =
+        attributes.email ||
+        attributes.mail ||
+        (typeof req.user?.id === "string" && req.user.id.includes("@")
+            ? req.user.id
+            : "");
+    const email = typeof rawEmail === "string"
+        ? rawEmail.trim().toLowerCase()
+        : "";
+
+    let user;
     const identities = [
-        req.user?.attr?.email,
-        req.user?.attr?.mail,
+        email,
         req.user?.id
     ]
         .filter((value) => typeof value === "string")
-        .map((value) => value.trim())
+        .map((value) => value.trim().toLowerCase())
         .filter((value) => value && value !== "anonymous" && value !== "dummy");
 
-    let user;
     for (const identity of [...new Set(identities)]) {
         user = await SELECT.one
             .from(Users)
@@ -39,8 +49,56 @@ const getApplicationProfile = async (req, expectedRole) => {
         if (user) break;
     }
 
-    // CAP dummy authentication is development-only and avoids mock credential
-    // prompts. Use the seeded role-matched profile for local UI development.
+    // A BTP-authenticated adoption user is provisioned with a business profile
+    // on first use. This is profile setup only; XSUAA roles still authorize APIs.
+    if (
+        !user &&
+        expectedRole === "User" &&
+        email &&
+        req.user?.is?.("User")
+    ) {
+        let pending = profileProvisioning.get(email);
+        if (!pending) {
+            pending = (async () => {
+                const existing = await SELECT.one
+                    .from(Users)
+                    .where({ email });
+                if (existing) return existing;
+
+                await INSERT.into(Users).entries({
+                    firstName:
+                        attributes.given_name ||
+                        attributes.givenName ||
+                        attributes.firstName ||
+                        "",
+                    lastName:
+                        attributes.family_name ||
+                        attributes.familyName ||
+                        attributes.lastName ||
+                        "",
+                    email,
+                    role: "User",
+                    status: "Active"
+                });
+
+                return SELECT.one
+                    .from(Users)
+                    .where({ email });
+            })();
+            profileProvisioning.set(email, pending);
+        }
+
+        try {
+            user = await pending;
+        } finally {
+            if (profileProvisioning.get(email) === pending) {
+                profileProvisioning.delete(email);
+            }
+        }
+    }
+
+    // In local development, dummy auth intentionally avoids credential prompts.
+    // Use the seeded profile for each workspace without changing production auth.
     if (
         !user &&
         cds.env.profiles?.includes("development") &&
@@ -54,7 +112,7 @@ const getApplicationProfile = async (req, expectedRole) => {
     if (!user) {
         return req.reject(
             404,
-            "No active application profile exists for this account. Ask an administrator to create the profile."
+            "No application profile could be resolved for this account. Confirm the BTP identity includes an email claim."
         );
     }
 
@@ -356,16 +414,38 @@ const getApplicationProfile = async (req, expectedRole) => {
 // =====================================================
 
 this.on("CurrentSession", async (req) => {
-    const user =
-        await getApplicationProfile(req, "Admin");
+    // Session identity comes directly from the authenticated XSUAA user.
+    // The Admin @requires annotation above is the authorization boundary.
+    const attributes = req.user?.attr || {};
+    const rawEmail =
+        attributes.email ||
+        attributes.mail ||
+        (typeof req.user?.id === "string" && req.user.id.includes("@")
+            ? req.user.id
+            : "");
+    const email = typeof rawEmail === "string" ? rawEmail.trim() : "";
+
+    const profile = email
+        ? await SELECT.one.from(Users).where({ email })
+        : null;
 
     return {
-        ID: user.ID,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        role: user.role,
-        status: user.status
+        ID: profile?.ID || null,
+        firstName:
+            attributes.given_name ||
+            attributes.givenName ||
+            attributes.firstName ||
+            profile?.firstName ||
+            "",
+        lastName:
+            attributes.family_name ||
+            attributes.familyName ||
+            attributes.lastName ||
+            profile?.lastName ||
+            "",
+        email: email || profile?.email || req.user?.id || "",
+        role: "Admin",
+        status: profile?.status || "Active"
     };
 });
 
@@ -382,7 +462,7 @@ this.on("CurrentUser", async (req) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        role: user.role,
+        role: "User",
         status: user.status
     };
 });
