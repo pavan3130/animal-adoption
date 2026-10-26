@@ -168,7 +168,7 @@ sap.ui.define([
                     await this._fetchJson(
                         "/odata/v4/user/CurrentUser()"
                     );
-/*
+                /*
                  * OData functions usually return structured results
                  * directly. The fallback supports responses wrapped
                  * inside a value property.
@@ -273,7 +273,7 @@ sap.ui.define([
             icon: "sap-icon://home",
             type: "Transparent",
             press: this.onHomePress.bind(this)
-        }),
+        })
     ]
 })
                         });
