@@ -69,7 +69,7 @@ sap.ui.define([
                 ) {
                     console.info(
                         sPortalName +
-                            " opened with local development authentication."
+                            " opened locally. CAP dummy authentication is used only during development."
                     );
                 }
 
@@ -79,10 +79,10 @@ sap.ui.define([
             },
 
             // =====================================================
-            // ADMIN SIGN IN
+            // OPEN ADMIN PORTAL
             // =====================================================
 
-            onAdminSignIn: function () {
+            onOpenAdminPortal: function () {
                 this._openProtectedPortal(
                     "/animaladoption.dashboard.admin.admindashboard/index.html",
                     "Admin Portal"
@@ -90,10 +90,10 @@ sap.ui.define([
             },
 
             // =====================================================
-            // USER SIGN IN
+            // OPEN USER PORTAL
             // =====================================================
 
-            onUserSignIn: function () {
+            onOpenUserPortal: function () {
                 this._openProtectedPortal(
                     "/animaladoption.dashboard.user.userdashboard/index.html",
                     "User Portal"
@@ -101,10 +101,10 @@ sap.ui.define([
             },
 
             // =====================================================
-            // INSPECTOR SIGN IN
+            // OPEN INSPECTOR PORTAL
             // =====================================================
 
-            onInspectorSignIn: function () {
+            onOpenInspectorPortal: function () {
                 this._openProtectedPortal(
                     "/animaladoption.inspection.inspectionmanagement/index.html",
                     "Inspector Portal"
