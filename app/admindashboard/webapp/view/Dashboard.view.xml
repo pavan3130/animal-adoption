@@ -5,7 +5,8 @@
 
     <Page
         id="dashboardPage"
-        busyIndicatorDelay="0">
+        busyIndicatorDelay="0"
+        class="pawDashboardPage adminDashboardPage">
 
         <!-- ===================================================== -->
         <!-- ADMIN HEADER                                          -->
@@ -13,7 +14,7 @@
 
         <customHeader>
 
-            <OverflowToolbar id="adminDashboardHeader">
+            <OverflowToolbar id="adminDashboardHeader" class="pawDashboardHeader">
 
                 <Title
                     id="adminDashboardTitle"
@@ -47,7 +48,7 @@
             <VBox
                 id="mainContainer"
                 width="100%"
-                class="sapUiMediumMargin">
+                class="sapUiMediumMargin pawDashboardContent">
 
                 <!-- ================================================= -->
                 <!-- DASHBOARD HEADER                                  -->
