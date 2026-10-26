@@ -1,22 +1,59 @@
-# Getting Started
+# Paw Haven — Animal Adoption Management
 
-Welcome to your new CAP project.
+SAP CAP (Node.js) backend with SAP Fiori applications, SAP HANA Cloud persistence, and SAP BTP-managed access.
 
-It contains these folders and files, following our recommended project layout:
+## Project layout
 
-File or Folder | Purpose
----------|----------
-`app/` | content for UI frontends goes here
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
-`readme.md` | this getting started guide
+- `app/` — Fiori UI5 applications (landing page, admin and user dashboards, workflow, health management, inspection management)
+- `db/` — CAP data model and CSV seed data
+- `srv/` — CAP services and business logic
+- `approuter/` — SAP BTP application-router configuration
+- `mta.yaml` — Cloud Foundry deployment descriptor
+- `xs-security.json` — XSUAA role scopes and role templates
 
-## Next Steps
+## Run in SAP Business Application Studio
 
-- Open a new terminal and run `cds watch`
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start with your domain model, in a CDS file in `db/`
+From the project root:
 
-## Learn More
+```bash
+npm install
+npm run watch-landingpage
+```
 
-Learn more at <https://cap.cloud.sap>.
+Other UI previews are available through the scripts in the root `package.json`, including `watch-admindashboard`, `watch-userdashboard`, `watch-applicationworkflow`, `watch-healthmanagement`, and `watch-inspectionmanagement`.
+
+Development uses CAP's `dummy` authentication provider to avoid hard-coded usernames and passwords. This is only for local development. The production profile uses XSUAA.
+
+## Deploy to SAP BTP Cloud Foundry
+
+Prerequisites:
+
+- SAP HANA Cloud is provisioned and running.
+- Cloud Foundry org and space are selected.
+- Cloud Foundry CLI and the MTA Build Tool (`mbt`) are available in the build/deployment environment.
+
+Build and deploy from the repository root:
+
+```bash
+npm install --no-audit --no-fund
+mbt build -t mta_archives
+cf deploy mta_archives/animal-adoption_1.0.0.mtar
+```
+
+The MTA defines the CAP service, HANA HDI container, App Router, and XSUAA application. The production database configuration uses `@cap-js/hana` and an HDI container; SQLite is not the deployment database.
+
+## Assign access in BTP Cockpit
+
+After deployment, open **BTP Cockpit → Security → Role Collections** and assign users to the role collections created for the application:
+
+- **Animal Adoption Admin** — administrative services and dashboards
+- **Animal Adoption User** — adoption-user services
+- **Animal Adoption Inspector** — inspection services
+
+The App Router and XSUAA are intentionally retained: they perform the BTP login/session flow and pass the authenticated identity to CAP. Application role checks are enforced by CAP service annotations and the XSUAA roles, not by an in-app username/password screen.
+
+The user dashboard creates an application profile for a first-time authenticated identity with the XSUAA `User` role. Admin profile information is read from the BTP identity claims; access to Admin services still requires the Admin role.
+
+## Before production use
+
+The repair branch has been reviewed at source level, but a live SAP BTP deployment and a complete Fiori browser test still need to be run in your BAS/BTP environment. Verify role collection assignments, HANA HDI binding, and each portal's service calls after deployment.
