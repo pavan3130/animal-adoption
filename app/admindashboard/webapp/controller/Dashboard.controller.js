@@ -174,7 +174,7 @@ loadCurrentAdministrator: async function () {
             ? oResponse.value
             : oResponse;
 
-const sDisplayName = [
+    const sDisplayName = [
         oUser.firstName,
         oUser.lastName
     ]
@@ -259,11 +259,8 @@ onProfilePress: function (oEvent) {
                                 type:
                                     "Transparent",
 
-                                press:
-                                    this.onHomePress.bind(
-                                        this
-                                    )
-                            }),
+                                press: this.onHomePress.bind(this)
+                            })
                         ]
                     })
             });
