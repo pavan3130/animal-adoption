@@ -102,17 +102,17 @@ annotate service.HealthRecords with @(
         },
         {
             $Type : 'UI.DataFieldForAction',
-            Action : 'AdminService.EntityContainer/HealthMarkUnderTreatment',
+            Action : 'AdminService.HealthMarkUnderTreatment',
             Label : 'Mark Under Treatment'
         },
         {
             $Type : 'UI.DataFieldForAction',
-            Action : 'AdminService.EntityContainer/HealthMarkRecovered',
+            Action : 'AdminService.HealthMarkRecovered',
             Label : 'Mark Recovered'
         },
         {
             $Type : 'UI.DataFieldForAction',
-            Action : 'AdminService.EntityContainer/ScheduleNextCheckup',
+            Action : 'AdminService.ScheduleNextCheckup',
             Label : 'Schedule Next Checkup'
         }
     ],
@@ -160,19 +160,19 @@ annotate service.HealthRecords with @(
         },
         {
             $Type : 'UI.DataFieldForAction',
-            Action : 'AdminService.EntityContainer/HealthMarkUnderTreatment',
+            Action : 'AdminService.HealthMarkUnderTreatment',
             Label : 'Under Treatment',
             Inline : false
         },
         {
             $Type : 'UI.DataFieldForAction',
-            Action : 'AdminService.EntityContainer/HealthMarkRecovered',
+            Action : 'AdminService.HealthMarkRecovered',
             Label : 'Recovered',
             Inline : false
         },
         {
             $Type : 'UI.DataFieldForAction',
-            Action : 'AdminService.EntityContainer/ScheduleNextCheckup',
+            Action : 'AdminService.ScheduleNextCheckup',
             Label : 'Schedule Checkup',
             Inline : false
         }

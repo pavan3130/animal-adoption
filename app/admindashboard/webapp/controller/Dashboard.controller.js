@@ -303,18 +303,6 @@ onSignOut: function () {
         this._oProfilePopover.close();
     }
 
-    const hostname = window.location.hostname;
-    const isLocalCAPDevelopment =
-        window.location.port === "4004" ||
-        hostname.startsWith("port4004-") ||
-        hostname === "localhost" ||
-        hostname === "127.0.0.1";
-
-    if (isLocalCAPDevelopment) {
-        window.location.assign("/animaladoption.dashboard.home.landingpage/index.html");
-        return;
-    }
-
     window.location.assign("/do/logout");
 },
 
@@ -699,16 +687,20 @@ onSignOut: function () {
                                 oAnimal.name ||
                                     "Unnamed Animal",
 
-                                [
-                                    oAnimal.species || "Unknown species",
-                                    oAnimal.breed || "Unknown breed",
-                                    "Gender: " + (oAnimal.gender || "Unknown"),
-                                    "Age: " + (oAnimal.age ?? "Unknown"),
-                                    "Arrived: " + (oAnimal.arrivalDate || "Unknown"),
-                                    "Vaccination: " + (oAnimal.vaccinationStatus || "Unknown"),
-                                    "Spayed/neutered: " + (oAnimal.spayedOrNeutered || "Unknown"),
-                                    oAnimal.description || "No description available"
-                                ].join(" | "),
+                                (
+                                    oAnimal.species ||
+                                    "Unknown species"
+                                ) +
+                                    " | " +
+                                    (
+                                        oAnimal.breed ||
+                                        "Unknown breed"
+                                    ) +
+                                    " | Age: " +
+                                    (
+                                        oAnimal.age ??
+                                        "Unknown"
+                                    ),
 
                                 oAnimal.animalStatus
                             );

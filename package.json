@@ -15,8 +15,7 @@
   ],
   "devDependencies": {
     "@sap/cds-dk": "^10.2.0",
-    "cds-plugin-ui5": "^0.17.0",
-    "@cap-js/sqlite": "^3.1.2"
+    "cds-plugin-ui5": "0.13.6"
   },
   "scripts": {
     "watch-sprintproject": "cds watch --open animaladoption.admin.sprintproject/index.html?sap-ui-xx-viewCache=false --livereload false",
@@ -44,21 +43,36 @@
     "requires": {
       "auth": {
         "[development]": {
-          "kind": "dummy"
-        },
-        "[production]": {
-          "kind": "xsuaa"
-        }
-      },
-      "db": {
-        "[development]": {
-          "kind": "sqlite",
-          "credentials": {
-            "url": "db.sqlite"
+          "kind": "mocked",
+          "users": {
+            "pavan@example.com": {
+              "password": "pavan",
+              "roles": [
+                "User"
+              ]
+            },
+            "sneha@example.com": {
+              "password": "sneha",
+              "roles": [
+                "User"
+              ]
+            },
+            "rahul@example.com": {
+              "password": "rahul",
+              "roles": [
+                "Inspector"
+              ]
+            },
+            "admin@example.com": {
+              "password": "admin",
+              "roles": [
+                "Admin"
+              ]
+            }
           }
         },
         "[production]": {
-          "kind": "hana"
+          "kind": "xsuaa"
         }
       }
     }

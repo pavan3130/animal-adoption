@@ -61,9 +61,8 @@ sap.ui.define([
                  * intercepts this protected route and starts the
                  * XSUAA authentication flow.
                  *
-                 * Local development now uses development-only dummy auth
-                 * so the preview does not ask for browser credentials.
-                 * Production remains protected by XSUAA through AppRouter.
+                 * In local development, CAP mocked authentication
+                 * may show a browser credential prompt instead.
                  */
                 if (
                     this._isLocalDevelopment()
@@ -80,7 +79,7 @@ sap.ui.define([
             },
 
             // =====================================================
-            // ADMIN PORTAL NAVIGATION
+            // ADMIN SIGN IN
             // =====================================================
 
             onAdminSignIn: function () {
@@ -91,7 +90,7 @@ sap.ui.define([
             },
 
             // =====================================================
-            // USER PORTAL NAVIGATION
+            // USER SIGN IN
             // =====================================================
 
             onUserSignIn: function () {
@@ -102,7 +101,7 @@ sap.ui.define([
             },
 
             // =====================================================
-            // INSPECTOR PORTAL NAVIGATION
+            // INSPECTOR SIGN IN
             // =====================================================
 
             onInspectorSignIn: function () {

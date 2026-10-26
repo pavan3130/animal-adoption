@@ -19,45 +19,25 @@ export default cds.service.impl(async function () {
 // AUTHENTICATED USER HELPER
 // =====================================================
 
-const isLocalDummyAuth = () => {
-    const profiles = cds.env.profiles || [];
-    return (
-        cds.env.requires?.auth?.kind === "dummy" &&
-        !profiles.includes("production")
-    );
-};
+const getSignedInUser = async (req) => {
+    const userID =
+        req.user?.id?.trim();
 
-/*
- * With dummy authentication, local BAS requests have no named user.
- * Resolve a seeded profile for dashboard display and demo workflows only.
- * In production the XSUAA user identity and application profile are required.
- */
-const getSignedInUser = async (req, fallbackRole) => {
-    // In local dummy-auth mode no user credentials are collected. Use a seeded
-    // application profile explicitly for dashboard data and demo workflows.
-    // This branch never runs in production; production continues to use XSUAA.
-    if (isLocalDummyAuth()) {
-        if (fallbackRole) {
-            const demoUser = await SELECT.one
-                .from(Users)
-                .where({ role: fallbackRole, status: "Active" });
-            if (demoUser) return demoUser;
-        }
-
-        const demoUser = await SELECT.one
-            .from(Users)
-            .where({ status: "Active" });
-        if (demoUser) return demoUser;
-    }
-
-    const userID = req.user?.id?.trim();
-    if (!userID || userID === "anonymous") {
-        return req.reject(401, "Authentication is required");
+    if (
+        !userID ||
+        userID === "anonymous"
+    ) {
+        return req.reject(
+            401,
+            "Authentication is required"
+        );
     }
 
     const user = await SELECT.one
         .from(Users)
-        .where({ email: userID });
+        .where({
+            email: userID
+        });
 
     if (!user) {
         return req.reject(
@@ -365,7 +345,7 @@ const getSignedInUser = async (req, fallbackRole) => {
 
 this.on("CurrentSession", async (req) => {
     const user =
-        await getSignedInUser(req, "Admin");
+        await getSignedInUser(req);
 
     return {
         ID: user.ID,
@@ -383,7 +363,7 @@ this.on("CurrentSession", async (req) => {
 
 this.on("CurrentUser", async (req) => {
     const user =
-        await getSignedInUser(req, "User");
+        await getSignedInUser(req);
 
     if (user.role !== "User") {
         return req.reject(
@@ -410,7 +390,7 @@ this.on(
     "MyTotalApplications",
     async (req) => {
         const user =
-            await getSignedInUser(req, "User");
+            await getSignedInUser(req);
 
         const applications =
             await SELECT
@@ -427,7 +407,7 @@ this.on(
     "MyPendingApplications",
     async (req) => {
         const user =
-            await getSignedInUser(req, "User");
+            await getSignedInUser(req);
 
         const applications =
             await SELECT
@@ -448,7 +428,7 @@ this.on(
     "MyTotalAdoptions",
     async (req) => {
         const user =
-            await getSignedInUser(req, "User");
+            await getSignedInUser(req);
 
         const applications =
             await SELECT
@@ -494,7 +474,7 @@ this.on(
         } = req.data;
 
         const applicant =
-            await getSignedInUser(req, "User");
+            await getSignedInUser(req);
 
         if (applicant.role !== "User") {
             return req.reject(
