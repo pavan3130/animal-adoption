@@ -1,7 +1,7 @@
 {
   "_version": "1.89.0",
   "sap.app": {
-    "id": "aanimaladoption.workflow.admin.applicationworkflow",
+    "id": "animaladoption.workflow.admin.applicationworkflow",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -74,7 +74,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "aanimaladoption.workflow.admin.applicationworkflow.i18n.i18n"
+          "bundleName": "animaladoption.workflow.admin.applicationworkflow.i18n.i18n"
         }
       },
       "": {
@@ -98,10 +98,10 @@
       "extensions": {
         "sap.ui.controllerExtensions": {
           "sap.fe.templates.ListReport.ListReportController": {
-            "controllerName": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension"
+            "controllerName": "animaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension"
           },
           "sap.fe.templates.ObjectPage.ObjectPageController": {
-            "controllerName": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension"
+            "controllerName": "animaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension"
           }
         }
       }
@@ -149,12 +149,12 @@
                     "homeAction": {
                       "text": "Home",
                       "icon": "sap-icon://home",
-                      "press": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onHome"
+                      "press": "animaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onHome"
                     },
                     "signOutAction": {
                       "text": "Sign Out",
                       "icon": "sap-icon://log",
-                      "press": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onSignOut"
+                      "press": "animaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onSignOut"
                     }
                   }
                 }
@@ -176,12 +176,12 @@
                     "homeAction": {
                       "text": "Home",
                       "icon": "sap-icon://home",
-                      "press": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onHome"
+                      "press": "animaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onHome"
                     },
                     "signOutAction": {
                       "text": "Sign Out",
                       "icon": "sap-icon://log",
-                      "press": "aanimaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onSignOut"
+                      "press": "animaladoption.workflow.admin.applicationworkflow.ext.controller.WorkflowExtension.onSignOut"
                     }
                   }
                 }
